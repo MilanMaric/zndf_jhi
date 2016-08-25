@@ -29,6 +29,11 @@ public class Genre extends AbstractAuditingEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Override
+    public String toString() {
+        return "Genre{" + "id=" + id + ", name=" + name + '}';
+    }
+
     @NotNull
     @Size(min = 0, max = 50)
     @Column(length = 50)
