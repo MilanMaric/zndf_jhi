@@ -61,8 +61,6 @@ jhipster:
         #exposed-headers:
         #allow-credentials: true
         #max-age: 1800
-    mail:
-        from: zndf@localhost
     swagger:
         title: zndf API
         description: zndf API documentation

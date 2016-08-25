@@ -42,12 +42,14 @@ spring:
     mail:
         host: smtp.gmail.com
         port: 587
-        username: zndf2016
+        username: zndf2016@gmail.com
         password: rootroot
         protocol: smtp
         tls: true
-        auth: true
-        from: zndf2016@gmail.com
+        properties.mail.smtp:
+            auth: true
+            starttls.enable: true
+            ssl.trust: smtp.gmail.com
     messages:
         cache-seconds: 1
     thymeleaf:
