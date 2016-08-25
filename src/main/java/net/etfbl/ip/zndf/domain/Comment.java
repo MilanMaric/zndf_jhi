@@ -34,6 +34,7 @@ public class Comment extends AbstractAuditingEntity implements Serializable {
     private String text;
 
     @ManyToOne(fetch = FetchType.EAGER)
+    @JsonIgnore
     private Film film;
 
     @ManyToOne(fetch = FetchType.EAGER)

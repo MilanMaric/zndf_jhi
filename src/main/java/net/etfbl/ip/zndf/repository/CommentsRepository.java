@@ -17,7 +17,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface CommentsRepository extends JpaRepository<Comment, Long> {
 
-    public Page<Comment> findAllByFilm_FilmId(Film film, Pageable pageable);
+    public Page<Comment> findAllByFilm_Id(Film film, Pageable pageable);
 
     public Page<Comment> findAllByFilmId(Long filmId, Pageable pageable);
 }

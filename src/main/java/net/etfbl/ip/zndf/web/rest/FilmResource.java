@@ -16,8 +16,10 @@ import net.etfbl.ip.zndf.domain.Film;
 import net.etfbl.ip.zndf.repository.CommentsRepository;
 import net.etfbl.ip.zndf.repository.FilmRepository;
 import net.etfbl.ip.zndf.security.AuthoritiesConstants;
+import net.etfbl.ip.zndf.service.UserService;
 import net.etfbl.ip.zndf.web.rest.util.HeaderUtil;
 import net.etfbl.ip.zndf.web.rest.util.PaginationUtil;
+import net.etfbl.ip.zndf.web.rest.vm.CommentVM;
 import net.etfbl.ip.zndf.web.rest.vm.FilmVM;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,6 +51,9 @@ public class FilmResource {
 
     @Inject
     CommentsRepository commentsRepository;
+
+    @Inject
+    private UserService userService;
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
@@ -96,12 +101,16 @@ public class FilmResource {
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
-    @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, path = "/{id}/comments")
     @Timed
-    public ResponseEntity<Comment> saveComment(@RequestBody Comment comment) throws URISyntaxException {
+    public ResponseEntity<Comment> saveComment(@PathVariable Long id, @RequestBody CommentVM comment) throws URISyntaxException {
         log.info("Saving comment: {}", comment);
-        Comment newComment = commentsRepository.save(comment);
+        Comment commentObject = new Comment();
+        commentObject.setText(comment.getText());
+        commentObject.setUser(userService.getUserWithAuthorities());
+        Comment newComment = commentsRepository.save(commentObject);
         return ResponseEntity.created(new URI("/api/films/" + newComment.getId())).headers(HeaderUtil.createAlert("films.created", newComment.getId().toString())).body(newComment);
+
     }
 
 }
