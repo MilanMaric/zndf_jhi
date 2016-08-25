@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <changeSet author="milan (generated)" id="1472147811609-1">
+        <createTable tableName="jhi_film_genres">
+            <column name="jhi_film_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="genres_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="milan (generated)" id="1472147811609-2">
+        <createTable tableName="jhi_genre_films">
+            <column name="jhi_genre_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="films_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="milan (generated)" id="1472147811609-3">
+        <addPrimaryKey columnNames="jhi_film_id, genres_id" tableName="jhi_film_genres"/>
+    </changeSet>
+    <changeSet author="milan (generated)" id="1472147811609-4">
+        <addPrimaryKey columnNames="jhi_genre_id, films_id" tableName="jhi_genre_films"/>
+    </changeSet>
+    <changeSet author="milan (generated)" id="1472147811609-5">
+        <addForeignKeyConstraint baseColumnNames="jhi_genre_id" baseTableName="jhi_genre_films" constraintName="FK_27s8jpx4brl8hp5be444a40qv" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="jhi_genre"/>
+    </changeSet>
+    <changeSet author="milan (generated)" id="1472147811609-6">
+        <addForeignKeyConstraint baseColumnNames="jhi_film_id" baseTableName="jhi_film_genres" constraintName="FK_bkaa0ctwrtcylghdcdvthkbhn" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="jhi_film"/>
+    </changeSet>
+    <changeSet author="milan (generated)" id="1472147811609-7">
+        <addForeignKeyConstraint baseColumnNames="genres_id" baseTableName="jhi_film_genres" constraintName="FK_n9xksq5fb51ifsmknrffsugqb" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="jhi_genre"/>
+    </changeSet>
+    <changeSet author="milan (generated)" id="1472147811609-8">
+        <addForeignKeyConstraint baseColumnNames="films_id" baseTableName="jhi_genre_films" constraintName="FK_p29ca4nl09wdd9b0kyv4waarq" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="jhi_film"/>
+    </changeSet>
+</databaseChangeLog>

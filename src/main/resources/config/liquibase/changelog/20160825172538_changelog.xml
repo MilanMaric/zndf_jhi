@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <changeSet author="milan (generated)" id="1472145950014-1">
+        <createTable tableName="jhi_actor">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="jhi_actorPK"/>
+            </column>
+            <column name="created_by" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_by" type="VARCHAR(50)"/>
+            <column name="last_modified_date" type="datetime"/>
+            <column name="active" type="BOOLEAN"/>
+            <column name="born_date" type="date"/>
+            <column name="first_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="milan (generated)" id="1472145950014-2">
+        <createTable tableName="jhi_actor_roles">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="jhi_actor_rolesPK"/>
+            </column>
+            <column name="created_by" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_by" type="VARCHAR(50)"/>
+            <column name="last_modified_date" type="datetime"/>
+            <column name="active" type="BOOLEAN"/>
+            <column name="role_name" type="VARCHAR(255)"/>
+            <column name="actor_id" type="BIGINT"/>
+            <column name="film_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="milan (generated)" id="1472145950014-3">
+        <createTable tableName="jhi_comment">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="jhi_commentPK"/>
+            </column>
+            <column name="active" type="BOOLEAN"/>
+            <column name="text" type="VARCHAR(255)"/>
+            <column name="film_id" type="BIGINT"/>
+            <column name="user_id" type="BIGINT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="milan (generated)" id="1472145950014-4">
+        <createTable tableName="jhi_film">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="jhi_filmPK"/>
+            </column>
+            <column name="created_by" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_by" type="VARCHAR(50)"/>
+            <column name="last_modified_date" type="datetime"/>
+            <column name="active" type="BOOLEAN"/>
+            <column name="relase_date" type="date"/>
+            <column name="title" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="milan (generated)" id="1472145950014-5">
+        <createTable tableName="jhi_genre">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="jhi_genrePK"/>
+            </column>
+            <column name="created_by" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_by" type="VARCHAR(50)"/>
+            <column name="last_modified_date" type="datetime"/>
+            <column name="name" type="VARCHAR(50)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="milan (generated)" id="1472145950014-6">
+        <addForeignKeyConstraint baseColumnNames="film_id" baseTableName="jhi_actor_roles" constraintName="FK_532bhy63aj88noogx34q2tjgf" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="jhi_film"/>
+    </changeSet>
+    <changeSet author="milan (generated)" id="1472145950014-7">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="jhi_comment" constraintName="FK_cwhugi4fs66oeyr0edp5qcxco" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="jhi_user"/>
+    </changeSet>
+    <changeSet author="milan (generated)" id="1472145950014-8">
+        <addForeignKeyConstraint baseColumnNames="film_id" baseTableName="jhi_comment" constraintName="FK_erg8g9s95vx3rpbxj81qw1hp0" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="jhi_film"/>
+    </changeSet>
+    <changeSet author="milan (generated)" id="1472145950014-9">
+        <addForeignKeyConstraint baseColumnNames="actor_id" baseTableName="jhi_actor_roles" constraintName="FK_g6tsoi90i0arc8fyg5kj12ku0" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="jhi_actor"/>
+    </changeSet>
+    <changeSet author="milan (generated)" id="1472145950014-10">
+        <dropDefaultValue columnDataType="datetime" columnName="last_modified_date" tableName="jhi_user"/>
+    </changeSet>
+</databaseChangeLog>

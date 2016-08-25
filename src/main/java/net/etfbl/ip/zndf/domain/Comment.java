@@ -14,44 +14,34 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import org.hibernate.annotations.Where;
 
 /**
  *
  * @author milan
  */
-@Entity(name = "jhi_actor_roles")
+@Entity(name = "jhi_comment")
 @Where(clause = "active=1")
-public class ActorRoles extends AbstractAuditingEntity implements Serializable {
+public class Comment extends AbstractAuditingEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @NotNull
-    @ManyToOne(fetch = FetchType.EAGER)
-    private Actor actor;
+    @Size(min = 0)
+    @Column(name = "text")
+    private String text;
 
-    @NotNull
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnore
+    @ManyToOne(fetch = FetchType.EAGER)
     private Film film;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    private User user;
 
     @Column(name = "active")
     @JsonIgnore
-    Boolean active = true;
-
-    @Column(name = "role_name")
-    private String roleName;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
+    private Boolean active = true;
 
     public Boolean getActive() {
         return active;
@@ -61,12 +51,20 @@ public class ActorRoles extends AbstractAuditingEntity implements Serializable {
         this.active = active;
     }
 
-    public Actor getActor() {
-        return actor;
+    public Long getId() {
+        return id;
     }
 
-    public void setActor(Actor actor) {
-        this.actor = actor;
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
     }
 
     public Film getFilm() {
@@ -77,12 +75,12 @@ public class ActorRoles extends AbstractAuditingEntity implements Serializable {
         this.film = film;
     }
 
-    public String getRoleName() {
-        return roleName;
+    public User getUser() {
+        return user;
     }
 
-    public void setRoleName(String roleName) {
-        this.roleName = roleName;
+    public void setUser(User user) {
+        this.user = user;
     }
 
 }

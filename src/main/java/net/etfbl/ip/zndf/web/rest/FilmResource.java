@@ -9,12 +9,16 @@ import com.codahale.metrics.annotation.Timed;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.inject.Inject;
+import net.etfbl.ip.zndf.domain.Comment;
 import net.etfbl.ip.zndf.domain.Film;
+import net.etfbl.ip.zndf.repository.CommentsRepository;
 import net.etfbl.ip.zndf.repository.FilmRepository;
 import net.etfbl.ip.zndf.security.AuthoritiesConstants;
 import net.etfbl.ip.zndf.web.rest.util.HeaderUtil;
 import net.etfbl.ip.zndf.web.rest.util.PaginationUtil;
+import net.etfbl.ip.zndf.web.rest.vm.FilmVM;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -43,13 +47,17 @@ public class FilmResource {
     @Inject
     FilmRepository filmRepository;
 
+    @Inject
+    CommentsRepository commentsRepository;
+
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     @Secured(AuthoritiesConstants.USER)
-    public ResponseEntity<List<Film>> getAllUser(Pageable pageable) throws URISyntaxException {
+    public ResponseEntity<List<FilmVM>> getAll(Pageable pageable) throws URISyntaxException {
         Page<Film> page = filmRepository.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/films");
-        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+        List<FilmVM> list = page.getContent().stream().map(FilmVM::new).collect(Collectors.toList());
+        return new ResponseEntity<>(list, headers, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -78,6 +86,22 @@ public class FilmResource {
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+
+    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, path = "/{id}/comments")
+    @Timed
+    public ResponseEntity<List<Comment>> getComments(@PathVariable Long id, Pageable pageable) throws URISyntaxException {
+        Page<Comment> page = commentsRepository.findAllByFilmId(id, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/films/" + id + "/comments");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<Comment> saveComment(@RequestBody Comment comment) throws URISyntaxException {
+        log.info("Saving comment: {}", comment);
+        Comment newComment = commentsRepository.save(comment);
+        return ResponseEntity.created(new URI("/api/films/" + newComment.getId())).headers(HeaderUtil.createAlert("films.created", newComment.getId().toString())).body(newComment);
     }
 
 }

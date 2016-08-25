@@ -10,8 +10,8 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import javax.inject.Inject;
-import net.etfbl.ip.zndf.domain.Actor;
-import net.etfbl.ip.zndf.repository.ActorRepository;
+import net.etfbl.ip.zndf.domain.Genre;
+import net.etfbl.ip.zndf.repository.GenreRepository;
 import net.etfbl.ip.zndf.web.rest.util.HeaderUtil;
 import net.etfbl.ip.zndf.web.rest.util.PaginationUtil;
 import org.slf4j.Logger;
@@ -32,35 +32,35 @@ import org.springframework.web.bind.annotation.RestController;
  * @author milan
  */
 @RestController
-@RequestMapping("/api/actors")
-public class ActorResource {
+@RequestMapping("/api/genres")
+public class GenreResource {
 
-    private final Logger log = LoggerFactory.getLogger(ActorResource.class);
+    private final Logger log = LoggerFactory.getLogger(GenreResource.class);
 
     @Inject
-    ActorRepository actorRepository;
+    GenreRepository genreRepository;
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<List<Actor>> getAll(Pageable pageable) throws URISyntaxException {
-        Page<Actor> page = actorRepository.findAll(pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/actors");
+    public ResponseEntity<List<Genre>> getAll(Pageable pageable) throws URISyntaxException {
+        Page<Genre> page = genreRepository.findAll(pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/films");
         return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<Actor> save(@RequestBody Actor actor) throws URISyntaxException {
-        log.info("Saving actor: {}", actor);
-        Actor newActor = actorRepository.save(actor);
-        return ResponseEntity.created(new URI("/api/actors/" + newActor.getId())).headers(HeaderUtil.createAlert("films.created", newActor.getId().toString())).body(newActor);
+    public ResponseEntity<Genre> save(@RequestBody Genre genre) throws URISyntaxException {
+        log.info("Saving genre: {}", genre);
+        Genre newGenre = genreRepository.save(genre);
+        return ResponseEntity.created(new URI("/api/genres/" + newGenre.getId())).headers(HeaderUtil.createAlert("films.created", newGenre.getId().toString())).body(newGenre);
     }
 
     @RequestMapping(method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<Actor> update(@RequestBody Actor actor) throws URISyntaxException {
-        log.info("Update actor: {}", actor);
-        Actor newActor = actorRepository.save(actor);
-        return ResponseEntity.created(new URI("/api/actors/" + newActor.getId())).headers(HeaderUtil.createAlert("films.updated", newActor.getId().toString())).body(newActor);
+    public ResponseEntity<Genre> update(@RequestBody Genre genre) throws URISyntaxException {
+        log.info("Update genre: {}", genre);
+        Genre newGenre = genreRepository.save(genre);
+        return ResponseEntity.created(new URI("/api/genres/" + newGenre.getId())).headers(HeaderUtil.createAlert("films.updated", newGenre.getId().toString())).body(newGenre);
     }
 }

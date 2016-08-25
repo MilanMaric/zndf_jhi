@@ -17,12 +17,14 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import org.hibernate.annotations.Where;
 
 /**
  *
  * @author milan
  */
 @Entity(name = "jhi_actor")
+@Where(clause = "active=1")
 public class Actor extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -30,6 +32,14 @@ public class Actor extends AbstractAuditingEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
 
     @Column(name = "first_name", nullable = false)
     String firstName;
@@ -43,6 +53,10 @@ public class Actor extends AbstractAuditingEntity implements Serializable {
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "actor")
     @JsonIgnore
     Set<ActorRoles> actorRoles = new HashSet<>();
+
+    @Column(name = "active")
+    @JsonIgnore
+    Boolean active = true;
 
     public Set<ActorRoles> getActorRoles() {
         return actorRoles;

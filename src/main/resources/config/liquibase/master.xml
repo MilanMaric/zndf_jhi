@@ -5,8 +5,8 @@
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
 
     <include file="classpath:config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20160825115459_added_actor.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20160825122602_added_genre.xml" relativeToChangelogFile="false"/>
-    <include file="classpath:config/liquibase/changelog/20160825125805_added_film_with_actor.xml" relativeToChangelogFile="false"/>
-    
+    <include file="classpath:config/liquibase/changelog/20160825172538_changelog.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20160825175631_added_genres_many2many.xml" relativeToChangelogFile="false"/>
+    <include file="classpath:config/liquibase/changelog/20160825184325_added_comment_blamable.xml" relativeToChangelogFile="false"/>
+   
 </databaseChangeLog>

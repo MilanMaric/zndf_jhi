@@ -5,6 +5,7 @@
  */
 package net.etfbl.ip.zndf.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -15,13 +16,17 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.NotNull;
+import org.hibernate.annotations.Where;
 
 /**
  *
  * @author milan
  */
 @Entity(name = "jhi_film")
+@Where(clause = "active=1")
 public class Film extends AbstractAuditingEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -30,7 +35,8 @@ public class Film extends AbstractAuditingEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @Column(name = "title", nullable = true)
+    @NotNull
+    @Column(name = "title")
     private String title;
 
     @Column(name = "relase_date", nullable = true)
@@ -38,6 +44,29 @@ public class Film extends AbstractAuditingEntity implements Serializable {
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "film")
     private Set<ActorRoles> actorRoles = new HashSet<>();
+
+    @ManyToMany(fetch = FetchType.EAGER)
+    private Set<Genre> genres = new HashSet<>();
+
+    public Set<Genre> getGenres() {
+        return genres;
+    }
+
+    public void setGenres(Set<Genre> genres) {
+        this.genres = genres;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
+
+    @Column(name = "active")
+    @JsonIgnore
+    Boolean active = true;
 
     public Long getId() {
         return id;

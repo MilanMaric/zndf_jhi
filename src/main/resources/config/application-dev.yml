@@ -41,9 +41,13 @@ spring:
             hibernate.generate_statistics: true
     mail:
         host: smtp.gmail.com
-        port: 25
-        username: zndf
+        port: 587
+        username: zndf2016
         password: rootroot
+        protocol: smtp
+        tls: true
+        auth: true
+        from: zndf2016@gmail.com
     messages:
         cache-seconds: 1
     thymeleaf:
