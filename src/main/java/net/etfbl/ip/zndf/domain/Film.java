@@ -48,6 +48,40 @@ public class Film extends AbstractAuditingEntity implements Serializable {
     @ManyToMany(fetch = FetchType.EAGER)
     private Set<Genre> genres = new HashSet<>();
 
+    @Column(name = "description")
+    private String description;
+
+    @Column(name = "rate")
+    @JsonIgnore
+    private Double rate;
+
+    @Column(name = "duration")
+    private Double duration;
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Double getRate() {
+        return rate;
+    }
+
+    public void setRate(Double rate) {
+        this.rate = rate;
+    }
+
+    public Double getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Double duration) {
+        this.duration = duration;
+    }
+
     public Set<Genre> getGenres() {
         return genres;
     }

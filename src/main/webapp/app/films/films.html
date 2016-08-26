@@ -13,19 +13,21 @@
             <thead>
                 <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
                     <th jh-sort-by="id"><span translate="global.field.id">ID</span><span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="firstName"><span translate="film.firstName">Date of birth</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="lastName"><span translate="film.lastName">Date of birth</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="name"><span translate="film.bornDate">Date of birth</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    
+                    <th jh-sort-by="title"><span translate="film.title">Title</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="releaseDate"><span translate="film.relaseDate">Relase date</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th><span translate="film.duration">Duration</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="rating"><span translate="film.rating">Rating</span> <span class="glyphicon glyphicon-sort"></span></th>
+
                     <th></th>
                 </tr>
             </thead>
             <tbody>
                 <tr ng-repeat="film in vm.films track by film.id">
                     <td><a ui-sref="film-detail({id:film.id})">{{film.id}}</a></td>
-                    <td>{{film.firstName}}</td>
-                    <td>{{film.lastName}}</td>
-                    <td>{{film.bornDate}}</td>
+                    <td>{{film.title}}</td>
+                    <td>{{film.releaseDate}}</td>
+                    <td>{{film.duration}}</td>
+                    <td>{{film.rating}}</td>
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">
                             <button type="submit"
@@ -40,12 +42,12 @@
                                 <span class="glyphicon glyphicon-pencil"></span>
                                 <span class="hidden-xs hidden-sm" translate="entity.action.edit"></span>
                             </button>
-                            <button type="submit"
+<!--                            <button type="submit"
                                     ui-sref="films.delete({id:film.id})"
-                                    class="btn btn-danger btn-sm" ng-disabled="vm.currentAccount.login == film.login">
+                                    class="btn btn-danger btn-sm" ng-disabled="vm.currentAccount== film.login">
                                 <span class="glyphicon glyphicon-remove-circle"></span>
                                 <span class="hidden-xs hidden-sm" translate="entity.action.delete"></span>
-                            </button>
+                            </button>-->
                         </div>
                     </td>
                 </tr>

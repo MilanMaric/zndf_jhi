@@ -13,9 +13,11 @@ import java.util.stream.Collectors;
 import javax.inject.Inject;
 import net.etfbl.ip.zndf.domain.Comment;
 import net.etfbl.ip.zndf.domain.Film;
+import net.etfbl.ip.zndf.domain.Trailer;
 import net.etfbl.ip.zndf.repository.ActorRolesRepository;
 import net.etfbl.ip.zndf.repository.CommentsRepository;
 import net.etfbl.ip.zndf.repository.FilmRepository;
+import net.etfbl.ip.zndf.repository.TrailerRepository;
 import net.etfbl.ip.zndf.security.AuthoritiesConstants;
 import net.etfbl.ip.zndf.service.UserService;
 import net.etfbl.ip.zndf.web.rest.util.HeaderUtil;
@@ -35,6 +37,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -57,13 +60,20 @@ public class FilmResource {
     ActorRolesRepository actorRolesRepository;
 
     @Inject
+    TrailerRepository trailerRepository;
+
+    @Inject
     private UserService userService;
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-
-    public ResponseEntity<List<FilmVM>> getAll(Pageable pageable) throws URISyntaxException {
-        Page<Film> page = filmRepository.findAll(pageable);
+    public ResponseEntity<List<FilmVM>> getAll(Pageable pageable, @RequestParam(name = "s", required = false) String search) throws URISyntaxException {
+        Page<Film> page;
+        if (search == null || search.isEmpty()) {
+            page = filmRepository.findAll(pageable);
+        } else {
+            page = filmRepository.findAllByTitleContaining(search, pageable);
+        }
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/films");
         List<FilmVM> list = page.getContent().stream().map(FilmVM::new).collect(Collectors.toList());
         return new ResponseEntity<>(list, headers, HttpStatus.OK);
@@ -71,7 +81,6 @@ public class FilmResource {
 
     @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    @Secured(AuthoritiesConstants.USER)
     public ResponseEntity<Film> save(@RequestBody Film film) throws URISyntaxException {
         log.info("Saving film: {}", film);
 
@@ -130,7 +139,33 @@ public class FilmResource {
         } else {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+    }
 
+    @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, path = "/{id}/trailers")
+    @Timed
+    @Secured(AuthoritiesConstants.USER)
+    public ResponseEntity<Trailer> saveTrailer(@PathVariable Long id, @RequestBody Trailer trailer) throws URISyntaxException {
+        Film film = filmRepository.findOne(id);
+        if (film != null) {
+            trailer.setFilm(film);
+            Trailer newTrailer = trailerRepository.save(trailer);
+            return ResponseEntity.created(new URI("/api/films/" + newTrailer.getId())).headers(HeaderUtil.createAlert("films.created", newTrailer.getId().toString())).body(newTrailer);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, path = "/{id}/trailers")
+    @Timed
+    @Secured(AuthoritiesConstants.USER)
+    public ResponseEntity<List<Trailer>> saveTrailer(@PathVariable Long id) throws URISyntaxException {
+        Film film = filmRepository.findOne(id);
+        if (film != null) {
+            List<Trailer> list = trailerRepository.findAllByFilm(film);
+            return ResponseEntity.ok().body(list);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
 }

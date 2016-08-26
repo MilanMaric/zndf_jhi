@@ -7,8 +7,8 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand logo" href="#/" ng-click="vm.collapseNavbar()">
-                <img class="logo-img" src="content/images/logo-jhipster.png"/>
+            <a class="navbar-brand" href="#/" ng-click="vm.collapseNavbar()">
+                <span class="glyphicon glyphicon-film"></span>&nbsp;
                 <span translate="global.title">Zndf</span>
             </a>
         </div>
@@ -72,7 +72,10 @@
                     </ul>
                 </li>
                 <li ng-class="{active: vm.$state.includes('films')}" ng-switch-when="true">
-                    <a ui-sref="films">Films</a>
+                    <a ui-sref="films">
+                        <span class="glyphicon glyphicon-film"></span>&nbsp;
+                        Films
+                    </a>
                 </li>
                 <li ng-class="{active: vm.$state.includes('admin')}"  ng-switch-when="true" has-authority="ROLE_ADMIN" uib-dropdown dropdown>
                     <a class="dropdown-toggle" uib-dropdown-toggle href="" id="admin-menu">

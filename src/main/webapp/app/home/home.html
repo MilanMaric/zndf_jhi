@@ -21,11 +21,17 @@
                     </div>
                 </div>-->
         <div class="well col-md-4">
-            <h2 target="_new" ng-href="{{vm.feed.url}}">{{vm.feed.description}}</h2>
+            <h3>{{vm.feed.description}}</h3>
             <div class="list-group">
                 <div class="list-group-item" ng-repeat="entry in vm.feed.entries">
-                    <h4 class="list-group-item-heading">{{entry.title}}</h4>
-                    <p class="list-group-item-text"><a target="_new" ng-href="{{entry.link}}">More details</a></p>
+                    <div class="row-action-primary">
+                        <i class="material-icons">{{entry.title.charAt(0)}}</i>
+                    </div>
+                    <div class="row-content">
+                        <h5 class="list-group-item-heading">{{entry.title}}</h5>
+                        <p class="list-group-item-text">{{entry.contentSnippet}}</p>
+                        <p class="list-group-item-text"><a target="_new" ng-href="{{entry.link}}">More details</a></p>
+                    </div>
                 </div>
             </div>
             <uib-pagination class="pagination-sm" total-items="100" ng-model="vm.feedsPage" ng-change="vm.getFeeds()"></uib-pagination>
@@ -65,14 +71,20 @@
             </div>
 
             <div class="well">
-                <!--<h1>Search IMDB videos: </h1>-->
+                <h3>Search IMDB: </h3>
                 <div class="form-group">
                     <input class="form-control" ng-model="vm.search" ng-change="vm.onSearchChange()" placeholder="Search IMDB...">
                 </div>
                 <div class="list-group">
                     <div class="list-group-item" ng-repeat="result in vm.searchResults.Search">
-                        <h4 class="list-group-item-heading">{{result.Title}} ({{result.Year}})</h4>
-                        <p class="list-group-item-text"><a target="_new" ng-href="{{'http://www.imdb.com/title/'+result.imdbID}}">More details</a></p>
+                        <div class="row-action-primary">
+                            <i class="material-icons">{{result.title.charAt(0)}}</i>
+                        </div>
+                        <div class="row-content">
+                            <h4 class="list-group-item-heading">{{result.Title}} ({{result.Year}})</h4>
+                            <p class="list-group-item-text">{{result.Type}}</p>
+                            <p class="list-group-item-text"><a target="_new" ng-href="{{'http://www.imdb.com/title/'+result.imdbID}}">More details</a></p>
+                        </div>
                     </div>
                 </div>
             </div>

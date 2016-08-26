@@ -5,17 +5,16 @@
  */
 package net.etfbl.ip.zndf.repository;
 
+import java.util.List;
 import net.etfbl.ip.zndf.domain.Film;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import net.etfbl.ip.zndf.domain.Trailer;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  *
  * @author milan
  */
-public interface FilmRepository extends JpaRepository<Film, Long> {
+public interface TrailerRepository extends JpaRepository<Trailer, Long> {
 
-    Page<Film> findAllByTitleContaining(String title, Pageable pageable);
-
+    public List<Trailer> findAllByFilm(Film film);
 }

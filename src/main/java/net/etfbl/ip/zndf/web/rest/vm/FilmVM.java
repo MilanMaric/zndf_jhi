@@ -19,6 +19,9 @@ public class FilmVM {
     private String title;
     private LocalDate releaseDate;
 
+    private Double duration;
+    private Double rating;
+
     public FilmVM() {
     }
 
@@ -26,6 +29,24 @@ public class FilmVM {
         this.title = film.getTitle();
         this.id = film.getId();
         this.releaseDate = film.getRelaseDate();
+        this.duration = film.getDuration();
+        this.rating = film.getRate();
+    }
+
+    public Double getDuration() {
+        return duration;
+    }
+
+    public void setDuration(Double duration) {
+        this.duration = duration;
+    }
+
+    public Double getRating() {
+        return rating;
+    }
+
+    public void setRating(Double rating) {
+        this.rating = rating;
     }
 
     public Long getId() {

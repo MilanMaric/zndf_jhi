@@ -14,9 +14,11 @@
         "detail": {
             "title": "Film"
         },
-        "login": "Id",
-        "firstName": "First name",
-        "lastName": "Last name",
-        "bornDate": "Date of birth"
+        "title": "Title",
+        "relaseDate": "Relase date",
+        "duration": "Duration",
+        "rating": "Rating",
+        "description": "Description",
+        "genres": "Genres"
     }
 }
