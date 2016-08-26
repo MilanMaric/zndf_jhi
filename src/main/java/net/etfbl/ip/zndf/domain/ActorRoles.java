@@ -85,4 +85,9 @@ public class ActorRoles extends AbstractAuditingEntity implements Serializable {
         this.roleName = roleName;
     }
 
+    @Override
+    public String toString() {
+        return "ActorRoles{" + "id=" + id + ", actor=" + actor + ", active=" + active + ", roleName=" + roleName + '}';
+    }
+
 }

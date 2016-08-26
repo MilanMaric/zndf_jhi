@@ -13,6 +13,7 @@ import java.util.stream.Collectors;
 import javax.inject.Inject;
 import net.etfbl.ip.zndf.domain.Comment;
 import net.etfbl.ip.zndf.domain.Film;
+import net.etfbl.ip.zndf.repository.ActorRolesRepository;
 import net.etfbl.ip.zndf.repository.CommentsRepository;
 import net.etfbl.ip.zndf.repository.FilmRepository;
 import net.etfbl.ip.zndf.security.AuthoritiesConstants;
@@ -53,6 +54,9 @@ public class FilmResource {
     CommentsRepository commentsRepository;
 
     @Inject
+    ActorRolesRepository actorRolesRepository;
+
+    @Inject
     private UserService userService;
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -69,7 +73,13 @@ public class FilmResource {
     @Secured(AuthoritiesConstants.USER)
     public ResponseEntity<Film> save(@RequestBody Film film) throws URISyntaxException {
         log.info("Saving film: {}", film);
+
         Film newFilm = filmRepository.save(film);
+        film.getActorRoles().stream().forEach(actorRole -> {
+            log.debug("Actor role: {} -> actor {}", actorRole, actorRole.getActor());
+            actorRole.setFilm(newFilm);
+            actorRolesRepository.save(actorRole);
+        });
         return ResponseEntity.created(new URI("/api/films/" + newFilm.getId())).headers(HeaderUtil.createAlert("films.created", newFilm.getId().toString())).body(newFilm);
     }
 
