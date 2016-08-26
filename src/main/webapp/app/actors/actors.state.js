@@ -9,17 +9,17 @@
 
     function stateConfig($stateProvider) {
         $stateProvider
-                .state('genres', {
+                .state('actors', {
                     parent: 'admin',
-                    url: '/genres?page&sort',
+                    url: '/actors?page&sort',
                     data: {
-                        authorities: ['ROLE_ADMIN'],
+                        authorities: ['ROLE_USER'],
                         pageTitle: 'userManagement.home.title'
                     },
                     views: {
                         'content@': {
-                            templateUrl: 'app/admin/genres/genres.html',
-                            controller: 'GenresController',
+                            templateUrl: 'app/actors/actors.html',
+                            controller: 'ActorsController',
                             controllerAs: 'vm'
                         }
                     }, params: {
@@ -42,42 +42,42 @@
                                 };
                             }],
                         translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
-                                $translatePartialLoader.addPart('genre');
+                                $translatePartialLoader.addPart('actor');
                                 return $translate.refresh();
                             }]
 
                     }})
-                .state('genres-detail', {
+                .state('actors-detail', {
                     parent: 'admin',
-                    url: '/genres/:id',
+                    url: '/actors/:id',
                     data: {
-                        authorities: ['ROLE_ADMIN'],
-                        pageTitle: 'genre.detail.title'
+                        authorities: ['ROLE_USER'],
+                        pageTitle: 'actor.detail.title'
                     },
                     views: {
                         'content@': {
-                            templateUrl: 'app/admin/genres/genres-detail.html',
-                            controller: 'GenresDetailController',
+                            templateUrl: 'app/actors/actors-detail.html',
+                            controller: 'ActorsDetailController',
                             controllerAs: 'vm'
                         }
                     },
                     resolve: {
                         translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
-                                $translatePartialLoader.addPart('genre');
+                                $translatePartialLoader.addPart('actor');
                                 return $translate.refresh();
                             }]
                     }
                 })
-                .state('genres.new', {
-                    parent: 'genres',
+                .state('actors.new', {
+                    parent: 'actors',
                     url: '/new',
                     data: {
-                        authorities: ['ROLE_ADMIN']
+                        authorities: ['ROLE_USER']
                     },
                     onEnter: ['$stateParams', '$state', '$uibModal', function ($stateParams, $state, $uibModal) {
                             $uibModal.open({
-                                templateUrl: 'app/admin/genres/genres-dialog.html',
-                                controller: 'GenresDialogController',
+                                templateUrl: 'app/actors/actors-dialog.html',
+                                controller: 'ActorsDialogController',
                                 controllerAs: 'vm',
                                 backdrop: 'static',
                                 size: 'lg',
@@ -92,52 +92,52 @@
                                     }
                                 }
                             }).result.then(function () {
-                                $state.go('genres', null, {reload: true});
+                                $state.go('actors', null, {reload: true});
                             }, function () {
-                                $state.go('genres');
+                                $state.go('actors');
                             });
                         }]
                 })
-                .state('genres.edit', {
-                    parent: 'genres',
+                .state('actors.edit', {
+                    parent: 'actors',
                     url: '/{id}/edit',
                     data: {
-                        authorities: ['ROLE_ADMIN']
+                        authorities: ['ROLE_USER']
                     },
                     onEnter: ['$stateParams', '$state', '$uibModal', function ($stateParams, $state, $uibModal) {
                             $uibModal.open({
-                                templateUrl: 'app/admin/genres/genres-dialog.html',
-                                controller: 'GenresDialogController',
+                                templateUrl: 'app/actors/actors-dialog.html',
+                                controller: 'ActorsDialogController',
                                 controllerAs: 'vm',
                                 backdrop: 'static',
                                 size: 'lg',
                                 resolve: {
-                                    entity: ['Genre', function (Genre) {
-                                            return Genre.get({id: $stateParams.id});
+                                    entity: ['Actor', function (Actor) {
+                                            return Actor.get({id: $stateParams.id});
                                         }]
                                 }
                             }).result.then(function () {
-                                $state.go('genres', null, {reload: true});
+                                $state.go('actors', null, {reload: true});
                             }, function () {
                                 $state.go('^');
                             });
                         }]
                 })
-                .state('genres.delete', {
-                    parent: 'genres',
+                .state('actors.delete', {
+                    parent: 'actors',
                     url: '/{id}/delete',
                     data: {
-                        authorities: ['ROLE_ADMIN']
+                        authorities: ['ROLE_USER']
                     },
                     onEnter: ['$stateParams', '$state', '$uibModal', function ($stateParams, $state, $uibModal) {
                             $uibModal.open({
-                                templateUrl: 'app/admin/genres/genres-delete-dialog-controller.js',
-                                controller: 'GenresDeleteController',
+                                templateUrl: 'app/actors/actors-delete-dialog-controller.js',
+                                controller: 'ActorsDeleteController',
                                 controllerAs: 'vm',
                                 size: 'md',
                                 resolve: {
-                                    entity: ['Genre', function (Genre) {
-                                            return Genre.get({id: $stateParams.id});
+                                    entity: ['Actor', function (Actor) {
+                                            return Actor.get({id: $stateParams.id});
                                         }]
                                 }
                             }).result.then(function () {

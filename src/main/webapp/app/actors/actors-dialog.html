@@ -1,0 +1,71 @@
+<form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation>
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="vm.clear()">&times;</button>
+        <h4 class="modal-title" id="myUserLabel" translate="actor.home.createOrEditLabel">
+            Create or edit a User</h4>
+    </div>
+    <div class="modal-body">
+        <jhi-alert-error></jhi-alert-error>
+        <div class="form-group">
+            <label translate="global.field.id">ID</label>
+            <input type="text" class="form-control" name="id"
+                   ng-model="vm.actor.id" readonly>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label" translate="actor.firstName">FirstName</label>
+            <input type="text" class="form-control" name="firstName"
+                   ng-model="vm.actor.firstName" ng-required="vm.actor.id == null" ng-minlength=1 ng-maxlength=50 ng-pattern="/^[_'.@A-Za-z0-9-]*$/">
+
+            <div ng-show="editForm.firstName.$invalid">
+                <p class="help-block"
+                   ng-show="editForm.firstName.$error.required" translate="entity.validation.required">
+                    This field is required.
+                </p>
+
+                <p class="help-block"
+                   ng-show="editForm.firstName.$error.maxlength" translate="entity.validation.maxlength"
+                   translate-value-max="50">
+                    This field cannot be longer than 50 characters.
+                </p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label" translate="actor.lastName">Last name</label>
+            <input type="text" class="form-control" name="lastName"
+                   ng-model="vm.actor.lastName" ng-required="vm.actor.id == null" ng-minlength=1 ng-maxlength=50 ng-pattern="/^[_'.@A-Za-z0-9-]*$/">
+
+            <div ng-show="editForm.lastName.$invalid">
+                <p class="help-block"
+                   ng-show="editForm.lastName.$error.required" translate="entity.validation.required">
+                    This field is required.
+                </p>
+
+                <p class="help-block"
+                   ng-show="editForm.lastName.$error.maxlength" translate="entity.validation.maxlength"
+                   translate-value-max="50">
+                    This field cannot be longer than 50 characters.
+                </p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label" translate="actor.bornDate">Born date</label>
+            <uib-datepicker type="text" class="form-control" name="bornDate"
+                            ng-model="vm.actor.bornDate" ></uib-datepicker>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="vm.clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span
+                translate="entity.action.cancel">Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span translate="entity.action.save">Save</span>
+        </button>
+    </div>
+</form>

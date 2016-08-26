@@ -1,0 +1,22 @@
+{
+    "actor": {
+        "home": {
+            "title": "Actors",
+            "createLabel": "Create a new actor",
+            "createOrEditLabel": "Create or edit a actor"
+        },
+        "created": "A new actor is created with identifier {{ param }}",
+        "updated": "An actor is updated with identifier {{ param }}",
+        "deleted": "An actor is deleted with identifier {{ param }}",
+        "delete": {
+            "question": "Are you sure you want to delete actor {{ login }}?"
+        },
+        "detail": {
+            "title": "Actor"
+        },
+        "login": "Id",
+        "firstName": "First name",
+        "lastName": "Last name",
+        "bornDate": "Date of birth"
+    }
+}

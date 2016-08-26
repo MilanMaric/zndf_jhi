@@ -1,0 +1,19 @@
+{
+    "genre": {
+        "home": {
+            "title": "Genre",
+            "createLabel": "Neuen Genre erstellen",
+            "createOrEditLabel": "Genre erstellen oder bearbeiten"
+        },
+        "created": "Ein neuer Genre wurde mit ID {{ param }} erstellt",
+        "updated": "Ein Genre mit ID {{ param }} wurde geändert",
+        "deleted": "Ein Genre mit ID {{ param }} wurde gelöscht",
+        "delete": {
+            "question": "Sind Sie sicher, dass Sie den Genre {{ login }} löschen möchten?"
+        },
+        "detail": {
+            "title": "Genre"
+        },
+        "login": "Id"
+    }
+}

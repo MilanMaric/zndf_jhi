@@ -13,10 +13,10 @@
         vm.load = load;
         vm.genre = {};
 
-        vm.load($stateParams.login);
+        vm.load($stateParams.id);
 
-        function load (login) {
-            Genre.get({login: login}, function(result) {
+        function load (id) {
+            Genre.get({id: id}, function(result) {
                 vm.genre = result;
             });
         }

@@ -12,6 +12,7 @@ import java.util.List;
 import javax.inject.Inject;
 import net.etfbl.ip.zndf.domain.Genre;
 import net.etfbl.ip.zndf.repository.GenreRepository;
+import net.etfbl.ip.zndf.security.AuthoritiesConstants;
 import net.etfbl.ip.zndf.web.rest.util.HeaderUtil;
 import net.etfbl.ip.zndf.web.rest.util.PaginationUtil;
 import org.slf4j.Logger;
@@ -22,6 +23,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -63,4 +66,28 @@ public class GenreResource {
         Genre newGenre = genreRepository.save(genre);
         return ResponseEntity.created(new URI("/api/genres/" + newGenre.getId())).headers(HeaderUtil.createAlert("films.updated", newGenre.getId().toString())).body(newGenre);
     }
+
+    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, path = "/{id}")
+    @Timed
+    public ResponseEntity<Genre> get(@PathVariable Long id) {
+        Genre genre = genreRepository.findOne(id);
+        if (genre != null) {
+            return ResponseEntity.ok().body(genre);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @RequestMapping(method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE, path = "/{id}")
+    @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        Genre genre = genreRepository.findOne(id);
+        if (genre != null) {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
 }

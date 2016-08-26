@@ -57,7 +57,6 @@ public class FilmResource {
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    @Secured(AuthoritiesConstants.USER)
     public ResponseEntity<List<FilmVM>> getAll(Pageable pageable) throws URISyntaxException {
         Page<Film> page = filmRepository.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/films");
@@ -67,6 +66,7 @@ public class FilmResource {
 
     @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
+    @Secured(AuthoritiesConstants.USER)
     public ResponseEntity<Film> save(@RequestBody Film film) throws URISyntaxException {
         log.info("Saving film: {}", film);
         Film newFilm = filmRepository.save(film);
@@ -75,6 +75,7 @@ public class FilmResource {
 
     @RequestMapping(method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE, path = "/{id}")
     @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         Film film = filmRepository.findOne(id);
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -82,6 +83,7 @@ public class FilmResource {
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, path = "/{id}")
     @Timed
+    @Secured(AuthoritiesConstants.USER)
     public ResponseEntity<Film> getOne(@PathVariable Long id) {
         log.debug("Rest Get one: {}", id);
         Film film = filmRepository.findOne(id);
@@ -95,6 +97,7 @@ public class FilmResource {
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, path = "/{id}/comments")
     @Timed
+    @Secured(AuthoritiesConstants.USER)
     public ResponseEntity<List<Comment>> getComments(@PathVariable Long id, Pageable pageable) throws URISyntaxException {
         Page<Comment> page = commentsRepository.findAllByFilmId(id, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/films/" + id + "/comments");
@@ -103,6 +106,7 @@ public class FilmResource {
 
     @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, path = "/{id}/comments")
     @Timed
+    @Secured(AuthoritiesConstants.USER)
     public ResponseEntity<Comment> saveComment(@PathVariable Long id, @RequestBody CommentVM comment) throws URISyntaxException {
         log.info("Saving comment: {}", comment);
         Comment commentObject = new Comment();

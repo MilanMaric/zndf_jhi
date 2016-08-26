@@ -22,6 +22,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -62,5 +63,16 @@ public class ActorResource {
         log.info("Update actor: {}", actor);
         Actor newActor = actorRepository.save(actor);
         return ResponseEntity.created(new URI("/api/actors/" + newActor.getId())).headers(HeaderUtil.createAlert("films.updated", newActor.getId().toString())).body(newActor);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, path = "/{id}")
+    @Timed
+    public ResponseEntity<Actor> get(@PathVariable Long id) {
+        Actor actor = actorRepository.findOne(id);
+        if (actor != null) {
+            return ResponseEntity.ok().body(actor);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 }

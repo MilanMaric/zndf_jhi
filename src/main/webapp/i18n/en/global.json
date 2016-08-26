@@ -24,6 +24,7 @@
                 "tracker": "User tracker",
                 "metrics": "Metrics",
                 "health": "Health",
+                "genres":"Genres",
                 "configuration": "Configuration",
                 "logs": "Logs",
                 "audits": "Audits",
