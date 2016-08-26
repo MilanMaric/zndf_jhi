@@ -61,6 +61,7 @@ public class FilmResource {
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
+
     public ResponseEntity<List<FilmVM>> getAll(Pageable pageable) throws URISyntaxException {
         Page<Film> page = filmRepository.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/films");
@@ -119,11 +120,16 @@ public class FilmResource {
     @Secured(AuthoritiesConstants.USER)
     public ResponseEntity<Comment> saveComment(@PathVariable Long id, @RequestBody CommentVM comment) throws URISyntaxException {
         log.info("Saving comment: {}", comment);
-        Comment commentObject = new Comment();
-        commentObject.setText(comment.getText());
-        commentObject.setUser(userService.getUserWithAuthorities());
-        Comment newComment = commentsRepository.save(commentObject);
-        return ResponseEntity.created(new URI("/api/films/" + newComment.getId())).headers(HeaderUtil.createAlert("films.created", newComment.getId().toString())).body(newComment);
+        Film film = filmRepository.findOne(id);
+        if (film != null) {
+            Comment commentObject = new Comment();
+            commentObject.setText(comment.getText());
+            commentObject.setUser(userService.getUserWithAuthorities());
+            Comment newComment = commentsRepository.save(commentObject);
+            return ResponseEntity.created(new URI("/api/films/" + newComment.getId())).headers(HeaderUtil.createAlert("films.created", newComment.getId().toString())).body(newComment);
+        } else {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
 
     }
 

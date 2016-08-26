@@ -1,0 +1,59 @@
+<div>
+    <h2 translate="film.home.title">Users</h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+        <div class="col-md-4">
+            <button class="btn btn-primary" ui-sref="films.new">
+                <span class="glyphicon glyphicon-flash"></span> <span translate="film.home.createLabel">Create a new User</span>
+            </button>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
+                    <th jh-sort-by="id"><span translate="global.field.id">ID</span><span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="firstName"><span translate="film.firstName">Date of birth</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="lastName"><span translate="film.lastName">Date of birth</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="name"><span translate="film.bornDate">Date of birth</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="film in vm.films track by film.id">
+                    <td><a ui-sref="film-detail({id:film.id})">{{film.id}}</a></td>
+                    <td>{{film.firstName}}</td>
+                    <td>{{film.lastName}}</td>
+                    <td>{{film.bornDate}}</td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="films-detail({id:film.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-xs hidden-sm" translate="entity.action.view"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="films.edit({id:film.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-xs hidden-sm" translate="entity.action.edit"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="films.delete({id:film.id})"
+                                    class="btn btn-danger btn-sm" ng-disabled="vm.currentAccount.login == film.login">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-xs hidden-sm" translate="entity.action.delete"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="text-center">
+        <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"></jhi-item-count>
+        <uib-pagination class="pagination-sm" total-items="vm.totalItems" ng-model="vm.page" ng-change="vm.transition()"></uib-pagination>
+    </div>
+</div>

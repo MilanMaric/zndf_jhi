@@ -8,7 +8,7 @@
     Actor.$inject = ['$resource'];
 
     function Actor ($resource) {
-        var service = $resource('api/actors/:login', {}, {
+        var service = $resource('api/actors/:id', {}, {
             'query': {method: 'GET', isArray: true},
             'get': {
                 method: 'GET',

@@ -1,0 +1,22 @@
+{
+    "film": {
+        "home": {
+            "title": "Films",
+            "createLabel": "Create a new film",
+            "createOrEditLabel": "Create or edit a film"
+        },
+        "created": "A new film is created with identifier {{ param }}",
+        "updated": "An film is updated with identifier {{ param }}",
+        "deleted": "An film is deleted with identifier {{ param }}",
+        "delete": {
+            "question": "Are you sure you want to delete film {{ login }}?"
+        },
+        "detail": {
+            "title": "Film"
+        },
+        "login": "Id",
+        "firstName": "First name",
+        "lastName": "Last name",
+        "bornDate": "Date of birth"
+    }
+}

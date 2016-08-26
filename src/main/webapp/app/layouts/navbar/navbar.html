@@ -21,7 +21,7 @@
                     </a>
                 </li>
                 <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
-                
+
                 <li ng-class="{active: vm.$state.includes('account')}" uib-dropdown dropdown>
                     <a class="dropdown-toggle" uib-dropdown-toggle href="" id="account-menu">
                         <span>
@@ -70,6 +70,9 @@
                             </a>
                         </li>
                     </ul>
+                </li>
+                <li ng-class="{active: vm.$state.includes('films')}" ng-switch-when="true">
+                    <a ui-sref="films">Films</a>
                 </li>
                 <li ng-class="{active: vm.$state.includes('admin')}"  ng-switch-when="true" has-authority="ROLE_ADMIN" uib-dropdown dropdown>
                     <a class="dropdown-toggle" uib-dropdown-toggle href="" id="admin-menu">
@@ -135,7 +138,7 @@
                     </a>
                     <ul class="dropdown-menu" uib-dropdown-menu ng-if="languageVm.languages.length > 1">
                         <li active-menu="{{language}}" ng-repeat="language in languageVm.languages">
-                            <a href="" ng-click="languageVm.changeLanguage(language);vm.collapseNavbar();">{{language | findLanguageFromKey}}</a>
+                            <a href="" ng-click="languageVm.changeLanguage(language);vm.collapseNavbar();">{{language| findLanguageFromKey}}</a>
                         </li>
                     </ul>
                 </li>
