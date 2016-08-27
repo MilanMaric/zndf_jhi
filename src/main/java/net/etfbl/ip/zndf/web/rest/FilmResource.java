@@ -134,6 +134,7 @@ public class FilmResource {
             Comment commentObject = new Comment();
             commentObject.setText(comment.getText());
             commentObject.setUser(userService.getUserWithAuthorities());
+            commentObject.setFilm(film);
             Comment newComment = commentsRepository.save(commentObject);
             return ResponseEntity.created(new URI("/api/films/" + newComment.getId())).headers(HeaderUtil.createAlert("films.created", newComment.getId().toString())).body(newComment);
         } else {

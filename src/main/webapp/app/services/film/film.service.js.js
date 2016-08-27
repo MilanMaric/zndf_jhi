@@ -2,12 +2,12 @@
     'use strict';
 
     angular
-        .module('zndfApp')
-        .factory('Film', Film);
+            .module('zndfApp')
+            .factory('Film', Film);
 
     Film.$inject = ['$resource'];
 
-    function Film ($resource) {
+    function Film($resource) {
         var service = $resource('api/films/:id', {}, {
             'query': {method: 'GET', isArray: true},
             'get': {
@@ -17,11 +17,13 @@
                     return data;
                 }
             },
-            'save': { method:'POST' },
-            'update': { method:'PUT' },
-            'delete':{ method:'DELETE'}
-        });
-
+            'save': {method: 'POST'},
+            'update': {method: 'PUT'},
+            'delete': {method: 'DELETE'},
+            'getComments': {method: 'GET', url: '/api/films/:id/comments', isArray: true},
+            'saveComment': {method: 'POST', url: '/api/films/:id/comments'}
+        }
+        );
         return service;
     }
 })();

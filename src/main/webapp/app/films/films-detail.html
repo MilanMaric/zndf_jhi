@@ -1,14 +1,66 @@
-<div>
-    <h2><span translate="film.detail.title">Genre</span> "{{vm.film.name}}"</h2>
+<div class="well">
+    <h2><span translate="film.detail.title">Genre</span> "{{vm.film.title}}"</h2>
     <dl class="dl-horizontal">
         <dt><span translate="film.id">Id</span></dt>
         <dd><span>{{vm.film.id}}</span></dd>
-        <dt><span translate="film.name">Name</span></dt>
-        <dd><span>{{vm.film.name}}</span>
+        <dt><span translate="film.title">Title</span></dt>
+        <dd><span>{{vm.film.title}}</span>
+        <dt><span translate="film.description">Description</span></dt>
+        <dd><span>{{vm.film.description}}</span>
+        <dt><span translate="film.duration">Duration</span></dt>
+        <dd><span>{{vm.film.duration}}</span>
+        <dt translate="film.genres">Genres</dt>
+        <dd>
+            <div ng-repeat="genre in vm.film.genres">
+                <span>{{genre.name}}</span>
+            </div>
+        </dd>
     </dl>
-    <button type="submit"
-            ui-sref="films"
-            class="btn btn-info">
-        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span translate="entity.action.back"> Back</span>
-    </button>
+</div>
+
+<div class="well">
+    <h2>Trailers</h2>
+    <div class="list-group">
+        <div class="list-group-item list-group-item" ng-repeat="trailer in vm.trailers">
+            <iframe width="854" height="480" src="https://www.youtube.com/embed/qfNmyxV2Ncw" frameborder="0" allowfullscreen></iframe>
+        </div>
+    </div>
+</div>
+
+<div class="well ">
+    <h3 translate="film.comments">Comments</h3>
+    <div class="list-group">
+        <div class="list-group-item list-group-item-warning" ng-repeat="comment in vm.comments">
+            <div class="row-picture">
+                <img class="circle" src="http://www.startupdb.asia/assets/images/team.default.png" ng-if="!comment.user.image">
+                <img class="circle" ng-src="{{'/content/images/' + comment.user.image}}" ng-if="comment.user.image">
+            </div>
+            <div class="row-content">
+                <h5 class="list-group-item-heading">{{comment.text}}</h5>
+                <p class="list-group-item-text">{{comment.createdDate}}</p>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<div class="well">
+    <h3 class="control-label" translate="film.newComment">New comment</h3>
+    <form name="commentForm" role="form" novalidate ng-submit="vm.saveComment()" show-validation>
+
+        <div class="form-group">
+            <textarea type="text" class="form-control" name="description"
+                      ng-model="vm.newComment.text" ng-minlength=1></textarea>
+
+            <div ng-show="commentForm.duration.$invalid">
+                <p class="help-block"
+                   ng-show="commentForm.duration.$error.required" translate="entity.validation.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+        <button type="submit" ng-disabled="editForm.$invalid" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span translate="entity.action.save">Save</span>
+        </button>
+    </form>
 </div>

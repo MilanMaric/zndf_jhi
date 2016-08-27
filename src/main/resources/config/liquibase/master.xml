@@ -9,5 +9,6 @@
     <include file="classpath:config/liquibase/changelog/20160825175631_added_genres_many2many.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20160825184325_added_comment_blamable.xml" relativeToChangelogFile="false"/>
     <include file="classpath:config/liquibase/changelog/20160826153528_added_trailer_and_film_details.xml" relativeToChangelogFile="false"/>
-   
+    <include file="classpath:config/liquibase/changelog/20160827070451_added_image.xml" relativeToChangelogFile="false"/>
+     
 </databaseChangeLog>

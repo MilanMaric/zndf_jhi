@@ -32,6 +32,12 @@ public class JHipsterProperties {
 
     private final Ribbon ribbon = new Ribbon();
 
+    private final Video video = new Video();
+
+    public Video getVideo() {
+        return video;
+    }
+
     public Async getAsync() {
         return async;
     }
@@ -474,5 +480,22 @@ public class JHipsterProperties {
         public void setDisplayOnActiveProfiles(String[] displayOnActiveProfiles) {
             this.displayOnActiveProfiles = displayOnActiveProfiles;
         }
+    }
+
+    private static class Video {
+
+        private String location;
+
+        public Video() {
+        }
+
+        public String getLocation() {
+            return location;
+        }
+
+        public void setLocation(String location) {
+            this.location = location;
+        }
+
     }
 }

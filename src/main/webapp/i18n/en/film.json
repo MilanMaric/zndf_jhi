@@ -19,6 +19,9 @@
         "duration": "Duration",
         "rating": "Rating",
         "description": "Description",
-        "genres": "Genres"
+        "genres": "Genres",
+        "genreName": "Name",
+        "comments": "Comments",
+        "newComment": "New comment"
     }
 }

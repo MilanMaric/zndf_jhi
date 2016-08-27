@@ -69,6 +69,8 @@ jhipster:
             key: 86211a726c4c302aff1a331e91618e3c594fc73c
     metrics: # DropWizard Metrics configuration, used by MetricsConfiguration
         jmx.enabled: true
+    video:
+        location: C:\\Users\\milan\\jhip\\zndf_jhi\\target\\videos
     swagger:
         title: zndf API
         description: zndf API documentation

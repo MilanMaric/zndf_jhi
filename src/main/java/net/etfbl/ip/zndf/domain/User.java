@@ -1,19 +1,17 @@
 package net.etfbl.ip.zndf.domain;
 
-import net.etfbl.ip.zndf.config.Constants;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.validator.constraints.Email;
-
+import java.io.Serializable;
+import java.time.ZonedDateTime;
+import java.util.HashSet;
+import java.util.Locale;
+import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
-import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Locale;
-import java.util.Set;
-import java.time.ZonedDateTime;
+import net.etfbl.ip.zndf.config.Constants;
+import org.hibernate.validator.constraints.Email;
 
 /**
  * A user.
@@ -37,7 +35,7 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @JsonIgnore
     @NotNull
     @Size(min = 60, max = 60)
-    @Column(name = "password_hash",length = 60)
+    @Column(name = "password_hash", length = 60)
     private String password;
 
     @Size(max = 50)
@@ -73,12 +71,25 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Column(name = "reset_date", nullable = true)
     private ZonedDateTime resetDate = null;
 
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    @Column(name = "image", nullable = true)
+    private String image;
+
     @JsonIgnore
     @ManyToMany
     @JoinTable(
-        name = "jhi_user_authority",
-        joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
-        inverseJoinColumns = {@JoinColumn(name = "authority_name", referencedColumnName = "name")})
+            name = "jhi_user_authority",
+            joinColumns = {
+                @JoinColumn(name = "user_id", referencedColumnName = "id")},
+            inverseJoinColumns = {
+                @JoinColumn(name = "authority_name", referencedColumnName = "name")})
     private Set<Authority> authorities = new HashSet<>();
 
     @JsonIgnore
@@ -159,11 +170,11 @@ public class User extends AbstractAuditingEntity implements Serializable {
     }
 
     public ZonedDateTime getResetDate() {
-       return resetDate;
+        return resetDate;
     }
 
     public void setResetDate(ZonedDateTime resetDate) {
-       this.resetDate = resetDate;
+        this.resetDate = resetDate;
     }
 
     public String getLangKey() {
@@ -215,14 +226,14 @@ public class User extends AbstractAuditingEntity implements Serializable {
 
     @Override
     public String toString() {
-        return "User{" +
-            "login='" + login + '\'' +
-            ", firstName='" + firstName + '\'' +
-            ", lastName='" + lastName + '\'' +
-            ", email='" + email + '\'' +
-            ", activated='" + activated + '\'' +
-            ", langKey='" + langKey + '\'' +
-            ", activationKey='" + activationKey + '\'' +
-            "}";
+        return "User{"
+                + "login='" + login + '\''
+                + ", firstName='" + firstName + '\''
+                + ", lastName='" + lastName + '\''
+                + ", email='" + email + '\''
+                + ", activated='" + activated + '\''
+                + ", langKey='" + langKey + '\''
+                + ", activationKey='" + activationKey + '\''
+                + "}";
     }
 }
