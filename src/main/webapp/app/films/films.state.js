@@ -69,8 +69,8 @@
                     }
                 })
                 .state('films.new', {
-                    parent: 'app',
-                    url: '/new',
+                    parent: 'films',
+                    url: '/film/new',
                     data: {
                         authorities: ['ROLE_USER']
                     },
@@ -116,7 +116,7 @@
                 })
                 .state('films.delete', {
                     parent: 'films',
-                    url: '/{id}/delete',
+                    url: '/:id/delete',
                     data: {
                         authorities: ['ROLE_USER']
                     },

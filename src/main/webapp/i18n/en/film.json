@@ -24,7 +24,14 @@
         "comments": "Comments",
         "newComment": "New comment",
         "trailers": "Trailers",
-        "saveComment":"Save comment",
-        "saveTrailer":"Add trailer"
+        "saveComment": "Save comment",
+        "saveTrailer": "Add trailer",
+        "actor": {
+            "firstName": "First name",
+            "lastName": "Last name",
+            "bornDate": "Date of birth",
+            "add": "Add this actor",
+            "remove":"Remove"
+        }
     }
 }

@@ -22,7 +22,9 @@
                 </li>
                 <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
 
-                <li ng-class="{active: vm.$state.includes('account')}" uib-dropdown dropdown>
+                <li ng-class="{
+                            active: vm.$state.includes('account')
+                        }" uib-dropdown dropdown>
                     <a class="dropdown-toggle" uib-dropdown-toggle href="" id="account-menu">
                         <span>
                             <span class="glyphicon glyphicon-user"></span>
@@ -71,10 +73,20 @@
                         </li>
                     </ul>
                 </li>
-                <li ng-class="{active: vm.$state.includes('films')}" ng-switch-when="true">
+                <li ng-class="{
+                            active: vm.$state.includes('films')
+                        }" ng-switch-when="true">
                     <a ui-sref="films">
                         <span class="glyphicon glyphicon-film"></span>&nbsp;
                         Films
+                    </a>
+                </li>
+                <li ng-class="{
+                            active: vm.$state.includes('actors')
+                        }" ng-switch-when="true">
+                    <a ui-sref="actors">
+                        <span class="glyphicon glyphicon-user"></span>&nbsp;
+                        Actors
                     </a>
                 </li>
                 <li ng-class="{active: vm.$state.includes('admin')}"  ng-switch-when="true" has-authority="ROLE_ADMIN" uib-dropdown dropdown>

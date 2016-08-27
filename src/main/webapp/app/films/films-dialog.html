@@ -1,5 +1,5 @@
 <div class="well">
-    <form name="editForm" role="form" novalidate ng-submit="vm.save()" show-validation>
+    <form name="editForm" role="form" novalidate  show-validation>
 
         <div class="modal-header">
             <h4 class="modal-title" id="myUserLabel" translate="film.home.createOrEditLabel">
@@ -82,6 +82,76 @@
                 </select>
             </div>
 
+            <div class="row">
+                <div class="col-md-6 well well-info">
+                    <h2>All actors</h2>
+                    <input type="text" class="form-control" ng-model="vm.filmSearch.$" placeholder="Search actors">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
+                                    <th ><span translate="global.field.id">ID</span></th>
+                                    <th ><span translate="film.actor.firstName">Date of birth</span> </th>
+                                    <th ><span translate="film.actor.lastName">Date of birth</span> </th>
+                                    <th ><span translate="film.actor.bornDate">Date of birth</span> </th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="actor in vm.actors | filter:vm.filmSearch:strict">
+                                    <td><a ui-sref="actor-detail({id:actor.id})">{{actor.id}}</a></td>
+                                    <td>{{actor.firstName}}</td>
+                                    <td>{{actor.lastName}}</td>
+                                    <td>{{actor.bornDate}}</td>
+                                    <td class="text-right">
+                                        <div class="btn-group flex-btn-group-container">
+                                            <button ng-click="vm.addActor(actor)" class="btn btn-primary btn-sm">
+                                                <span class="glyphicon glyphicon-plus"></span>
+                                                <span class="hidden-xs hidden-sm" translate="film.actor.add"></span>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-md-6 well well-success">
+                    <h2>Actors on movie</h2>
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
+                                    <th ><span translate="global.field.id">ID</span></th>
+                                    <th ><span translate="film.actor.firstName">Date of birth</span> </th>
+                                    <th ><span translate="film.actor.lastName">Date of birth</span> </th>
+                                    <th ><span translate="film.actor.bornDate">Date of birth</span> </th>
+                                    <th><span>Role</span></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="actorRole in vm.film.actorRoles">
+                                    <td><a ui-sref="actor-detail({id:actor.id})">{{actor.id}}</a></td>
+                                    <td>{{actorRole.actor.firstName}}</td>
+                                    <td>{{actorRole.actor.lastName}}</td>
+                                    <td>{{actorRole.actor.bornDate}}</td>
+                                    <td><input type="text" class="form-control" ng-model="actorRole.roleName"></td>
+                                    <td class="text-right">
+                                        <div class="btn-group flex-btn-group-container">
+                                            <button                                             ng-click="vm.removeActorRole(actorRole)"
+                                                                                                class="btn btn-danger btn-sm">
+                                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                                <span class="hidden-xs hidden-sm" translate="film.actor.remove"></span>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
 
         </div>
         <div class="modal-footer">
@@ -89,8 +159,8 @@
                             <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span
                                 translate="entity.action.cancel">Cancel</span>
                         </button>-->
-            <button type="submit" 
-                    
+            <button ng-click="vm.save()" 
+
                     class="btn btn-primary">
                 <!--ng-disabled="editForm.$invalid || isSaving"--> 
                 <span class="glyphicon glyphicon-save"></span>&nbsp;<span translate="entity.action.save">Save</span>

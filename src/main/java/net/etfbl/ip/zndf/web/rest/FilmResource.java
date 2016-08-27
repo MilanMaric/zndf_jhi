@@ -93,6 +93,20 @@ public class FilmResource {
         return ResponseEntity.created(new URI("/api/films/" + newFilm.getId())).headers(HeaderUtil.createAlert("films.created", newFilm.getId().toString())).body(newFilm);
     }
 
+    @RequestMapping(method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<Film> update(@RequestBody Film film) throws URISyntaxException {
+        log.info("Saving film: {}", film);
+
+        Film newFilm = filmRepository.save(film);
+        film.getActorRoles().stream().forEach(actorRole -> {
+            log.debug("Actor role: {} -> actor {}", actorRole, actorRole.getActor());
+            actorRole.setFilm(newFilm);
+            actorRolesRepository.save(actorRole);
+        });
+        return ResponseEntity.created(new URI("/api/films/" + newFilm.getId())).headers(HeaderUtil.createAlert("films.updated", newFilm.getId().toString())).body(newFilm);
+    }
+
     @RequestMapping(method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE, path = "/{id}")
     @Timed
     @Secured(AuthoritiesConstants.ADMIN)
