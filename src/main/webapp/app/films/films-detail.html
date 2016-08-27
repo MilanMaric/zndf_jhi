@@ -19,12 +19,22 @@
 </div>
 
 <div class="well">
-    <h2>Trailers</h2>
+    <h3 translate="film.trailers">Trailers</h3>
     <div class="list-group">
         <div class="list-group-item list-group-item" ng-repeat="trailer in vm.trailers">
-            <iframe width="854" height="480" src="https://www.youtube.com/embed/qfNmyxV2Ncw" frameborder="0" allowfullscreen></iframe>
+            <iframe width="854" height="480" ng-src="{{vm.getTrailerEmbeddedLink(trailer)}}" frameborder="0" allowfullscreen></iframe>
         </div>
     </div>
+    
+     <form name="commentForm" role="form" novalidate ng-submit="vm.saveTrailer()" show-validation>
+        <div class="form-group">
+            <input type="text" class="form-control" name="description"
+                      ng-model="vm.newTrailer.uri" ng-minlength=1>
+        </div>
+        <button type="submit" ng-disabled="editForm.$invalid" class="btn btn-primary text-center">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span translate="film.saveTrailer">Save</span>
+        </button>
+    </form>
 </div>
 
 <div class="well ">
@@ -36,18 +46,15 @@
                 <img class="circle" ng-src="{{'/content/images/' + comment.user.image}}" ng-if="comment.user.image">
             </div>
             <div class="row-content">
+                <div class="label label-info">{{comment.user.lastName}},{{comment.user.firstName}}</div>
                 <h5 class="list-group-item-heading">{{comment.text}}</h5>
                 <p class="list-group-item-text">{{comment.createdDate}}</p>
             </div>
-
+            <span class="list-group-separator"></span>
         </div>
     </div>
-</div>
 
-<div class="well">
-    <h3 class="control-label" translate="film.newComment">New comment</h3>
     <form name="commentForm" role="form" novalidate ng-submit="vm.saveComment()" show-validation>
-
         <div class="form-group">
             <textarea type="text" class="form-control" name="description"
                       ng-model="vm.newComment.text" ng-minlength=1></textarea>
@@ -59,8 +66,8 @@
                 </p>
             </div>
         </div>
-        <button type="submit" ng-disabled="editForm.$invalid" class="btn btn-primary">
-            <span class="glyphicon glyphicon-save"></span>&nbsp;<span translate="entity.action.save">Save</span>
+        <button type="submit" ng-disabled="editForm.$invalid" class="btn btn-primary text-center">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span translate="film.saveComment">Save</span>
         </button>
     </form>
 </div>

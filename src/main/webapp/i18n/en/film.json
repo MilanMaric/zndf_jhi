@@ -22,6 +22,9 @@
         "genres": "Genres",
         "genreName": "Name",
         "comments": "Comments",
-        "newComment": "New comment"
+        "newComment": "New comment",
+        "trailers": "Trailers",
+        "saveComment":"Save comment",
+        "saveTrailer":"Add trailer"
     }
 }
