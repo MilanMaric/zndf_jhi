@@ -22,6 +22,16 @@ public class FilmVM {
     private Double duration;
     private Double rating;
 
+    private String description;
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public FilmVM() {
     }
 
@@ -31,6 +41,7 @@ public class FilmVM {
         this.releaseDate = film.getRelaseDate();
         this.duration = film.getDuration();
         this.rating = film.getRate();
+        this.description = film.getDescription();
     }
 
     public Double getDuration() {

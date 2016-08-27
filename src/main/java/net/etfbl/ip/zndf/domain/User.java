@@ -93,6 +93,24 @@ public class User extends AbstractAuditingEntity implements Serializable {
     private Set<Authority> authorities = new HashSet<>();
 
     @JsonIgnore
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "jhi_user_favorite_films",
+            joinColumns = {
+                @JoinColumn(name = "user_id", referencedColumnName = "id")},
+            inverseJoinColumns = {
+                @JoinColumn(name = "film_id", referencedColumnName = "id")})
+    private Set<Film> favoriteFilms = new HashSet<>();
+
+    public Set<Film> getFavoriteFilms() {
+        return favoriteFilms;
+    }
+
+    public void setFavoriteFilms(Set<Film> favoriteFilms) {
+        this.favoriteFilms = favoriteFilms;
+    }
+
+    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "user")
     private Set<PersistentToken> persistentTokens = new HashSet<>();
 

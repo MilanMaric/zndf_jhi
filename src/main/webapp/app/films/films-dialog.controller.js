@@ -50,7 +50,7 @@
             vm.isSaving = true;
             console.log(vm.film);
             if (vm.film.id !== null) {
-                Film.update({id:vm.film.id},vm.film, onSaveSuccess, onSaveError);
+                Film.update(vm.film, onSaveSuccess, onSaveError);
             } else {
                 Film.save(vm.film, onSaveSuccess, onSaveError);
             }

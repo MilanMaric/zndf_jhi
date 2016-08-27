@@ -5,9 +5,9 @@
             .module('zndfApp')
             .controller('FilmsDetailController', FilmsDetailController);
 
-    FilmsDetailController.$inject = ['$stateParams', 'Film', 'Comment','$sce'];
+    FilmsDetailController.$inject = ['$stateParams', 'Film', 'Comment', '$sce'];
 
-    function FilmsDetailController($stateParams, Film, Comment,$sce) {
+    function FilmsDetailController($stateParams, Film, Comment, $sce) {
         var vm = this;
 
         vm.load = load;
@@ -19,7 +19,12 @@
         vm.saveTrailer = saveTrailer;
         vm.loadTrailers = loadTrailers;
         vm.getTrailerEmbeddedLink = getTrailerEmbeddedLink;
-
+        vm.checkFavorite = checkFavorite;
+        vm.setFavorite=setFavorite;
+        
+        checkFavorite();
+        
+        
         function load(id) {
             Film.get({id: id}, function (result) {
                 vm.film = result;
@@ -66,6 +71,16 @@
                 } else {
                     return null;
                 }
+            }
+        }
+
+        function checkFavorite() {
+            vm.favorite = Film.checkFavorite({id: $stateParams.id});
+        }
+
+        function setFavorite() {
+            if (!vm.favorite) {
+                vm.favorite = Film.setFavorite({id: $stateParams.id});
             }
         }
     }

@@ -27,6 +27,7 @@
         vm.transition = transition;
         getAccount();
         getFilms();
+        getFavorites();
 
         function getAccount() {
             Principal.identity().then(function (account) {
@@ -80,6 +81,10 @@
                 s: vm.search,
                 page: 1
             });
+        }
+        
+        function getFavorites(){
+            vm.favorites=Film.getFavorites();
         }
     }
 })();

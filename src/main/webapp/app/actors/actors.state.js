@@ -10,7 +10,7 @@
     function stateConfig($stateProvider) {
         $stateProvider
                 .state('actors', {
-                    parent: 'admin',
+                    parent: 'app',
                     url: '/actors?page&sort',
                     data: {
                         authorities: ['ROLE_USER'],
@@ -48,7 +48,7 @@
 
                     }})
                 .state('actors-detail', {
-                    parent: 'admin',
+                    parent: 'app',
                     url: '/actors/:id',
                     data: {
                         authorities: ['ROLE_USER'],

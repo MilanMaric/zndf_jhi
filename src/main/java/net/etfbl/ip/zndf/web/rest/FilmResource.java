@@ -9,15 +9,18 @@ import com.codahale.metrics.annotation.Timed;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import javax.inject.Inject;
 import net.etfbl.ip.zndf.domain.Comment;
 import net.etfbl.ip.zndf.domain.Film;
 import net.etfbl.ip.zndf.domain.Trailer;
+import net.etfbl.ip.zndf.domain.User;
 import net.etfbl.ip.zndf.repository.ActorRolesRepository;
 import net.etfbl.ip.zndf.repository.CommentsRepository;
 import net.etfbl.ip.zndf.repository.FilmRepository;
 import net.etfbl.ip.zndf.repository.TrailerRepository;
+import net.etfbl.ip.zndf.repository.UserRepository;
 import net.etfbl.ip.zndf.security.AuthoritiesConstants;
 import net.etfbl.ip.zndf.service.UserService;
 import net.etfbl.ip.zndf.web.rest.util.HeaderUtil;
@@ -61,6 +64,9 @@ public class FilmResource {
 
     @Inject
     TrailerRepository trailerRepository;
+
+    @Inject
+    private UserRepository userRepository;
 
     @Inject
     private UserService userService;
@@ -181,6 +187,60 @@ public class FilmResource {
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+
+    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, path = "/{id}/like")
+    @Timed
+    @Secured(AuthoritiesConstants.USER)
+    public ResponseEntity<Boolean> checkLike(@PathVariable Long id) throws URISyntaxException {
+        Film film = filmRepository.findOne(id);
+        if (film != null) {
+            List<Film> films = userService
+                    .getUserWithAuthorities().getFavoriteFilms()
+                    .stream()
+                    .filter(f -> {
+                        return Objects.equals(f.getId(), film.getId());
+                    })
+                    .collect(Collectors.toList());
+            return ResponseEntity.ok().body(films.size() == 1);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, path = "/{id}/like")
+    @Timed
+    @Secured(AuthoritiesConstants.USER)
+    public ResponseEntity<Boolean> like(@PathVariable Long id) throws URISyntaxException {
+        Film film = filmRepository.findOne(id);
+        if (film != null) {
+            User user = userService
+                    .getUserWithAuthorities();
+            List<Film> films = user.getFavoriteFilms()
+                    .stream()
+                    .filter(f -> {
+                        return Objects.equals(f.getId(), film.getId());
+                    })
+                    .collect(Collectors.toList());
+            if (films.size() == 0) {
+                user.getFavoriteFilms().add(film);
+                userRepository.save(user);
+                return ResponseEntity.ok().body(true);
+            } else {
+                return ResponseEntity.ok().body(true);
+            }
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, path = "/favorites")
+    @Timed
+    public ResponseEntity<List<FilmVM>> getAll() throws URISyntaxException {
+        User user = userService
+                .getUserWithAuthorities();
+        List<FilmVM> list = user.getFavoriteFilms().stream().map(FilmVM::new).collect(Collectors.toList());
+        return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
 }

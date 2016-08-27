@@ -1,25 +1,5 @@
 <div ng-cloak>
     <div class="row">
-        <!--    <div class="container">
-                <div class="row">
-                    <div class="well col-md-7">
-                        <h1 translate="home.title">Welcome!</h1>
-        
-                        <div ng-switch="vm.isAuthenticated()">
-                            <div class="alert alert-success" ng-switch-when="true" translate="home.logged.message" translate-values="{username: '{{vm.account.login}}'}">
-                                You are logged in as user "{{vm.account.login}}".
-                            </div>
-        
-                            <div class="alert alert-warning" ng-switch-when="false" translate="global.messages.info.authenticated" translate-compile>
-                                If you want to <a class="alert-link" href="" ng-click="vm.login()">sign in</a>, you can try the default accounts:<br/>- Administrator (login="admin" and password="admin") <br/>- User (login="user" and password="user").
-                            </div>
-        
-                            <div class="alert alert-warning" ng-switch-when="false" translate="global.messages.info.register" translate-compile>
-                                You don't have an account yet? <a class="alert-link" ui-sref="register">Register a new account</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>-->
         <div class="well col-md-4">
             <h3>{{vm.feed.description}}</h3>
             <div class="list-group">
@@ -49,19 +29,50 @@
                         <div class="row-content">
                             <div class="least-content">{{film.rating}}</div>
                             <h4 class="list-group-item-heading">{{film.title}}</h4>
-
                             <p class="list-group-item-text">
-                                Release date: {{film.releaseDate}}
+                                {{film.description}}
+                            </p>
+                            <p></p>
+                            <p class="list-group-item-text">
+                                Release date: {{film.releaseDate}}, Duration {{film.duration}}
                             </p>
                             <div ng-switch="vm.isAuthenticated()">
                                 <div ng-switch-when="true">
-                                    More details
+                                    <a ui-sref="film-detail({id:film.id})">More details</a>
                                 </div>
 
                                 <div ng-switch-when="false">
                                     Log in to see more details
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <uib-pagination class="pagination-sm" total-items="vm.totalItems" ng-model="vm.page" ng-change="vm.transition()"></uib-pagination>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="well" ng-if="vm.isAuthenticated()">
+                <h1>Favorites</h1>
+                <div class="list-group">
+                    <div class="list-group-item" ng-repeat="film in vm.favorites">
+                        <div class="row-action-primary">
+                            <i class="material-icons">{{film.title.charAt(0)}}</i>
+                        </div>
+                        <div class="row-content">
+                            <div class="least-content">{{film.rating}}</div>
+                            <h4 class="list-group-item-heading">{{film.title}}</h4>
+                            <p class="list-group-item-text">
+                                {{film.description}}
+                            </p>
+                            <p></p>
+                            <p class="list-group-item-text">
+                                Release date: {{film.releaseDate}}, Duration {{film.duration}}
+                            </p>
+
+                                    <a ui-sref="film-detail({id:film.id})">More details</a>
+
                         </div>
                     </div>
                     <div class="text-center">
@@ -85,6 +96,7 @@
                             <p class="list-group-item-text">{{result.Type}}</p>
                             <p class="list-group-item-text"><a target="_new" ng-href="{{'http://www.imdb.com/title/'+result.imdbID}}">More details</a></p>
                         </div>
+                        <span class="list-group-separator"></span>
                     </div>
                 </div>
             </div>

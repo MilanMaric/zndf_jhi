@@ -1,21 +1,63 @@
 <div class="well">
     <h2><span translate="film.detail.title">Genre</span> "{{vm.film.title}}"</h2>
-    <dl class="dl-horizontal">
-        <dt><span translate="film.id">Id</span></dt>
-        <dd><span>{{vm.film.id}}</span></dd>
-        <dt><span translate="film.title">Title</span></dt>
-        <dd><span>{{vm.film.title}}</span>
-        <dt><span translate="film.description">Description</span></dt>
-        <dd><span>{{vm.film.description}}</span>
-        <dt><span translate="film.duration">Duration</span></dt>
-        <dd><span>{{vm.film.duration}}</span>
-        <dt translate="film.genres">Genres</dt>
-        <dd>
-            <div ng-repeat="genre in vm.film.genres">
-                <span>{{genre.name}}</span>
-            </div>
-        </dd>
-    </dl>
+    <div class="pull-right" ng-switch="vm.favorite">
+        <button class="btn btn-primary" ng-switch-when="false">
+            <span class="glyphicon glyphicon-plus"></span>
+            <span>Add to favorites</span>
+        </button>
+        <div ng-switch-when="true">
+            <span class="glyphicon glyphicon-star"></span>
+            <span>This film is in your favorites</span>
+        </div>
+    </div>
+</div>
+<dl class="dl-horizontal">
+    <dt><span translate="film.id">Id</span></dt>
+    <dd><span>{{vm.film.id}}</span></dd>
+    <dt><span translate="film.title">Title</span></dt>
+    <dd><span>{{vm.film.title}}</span>
+    <dt><span translate="film.description">Description</span></dt>
+    <dd><span>{{vm.film.description}}</span>
+    <dt><span translate="film.duration">Duration</span></dt>
+    <dd><span>{{vm.film.duration}}</span>
+    <dt translate="film.genres">Genres</dt>
+    <dd>
+        <div ng-repeat="genre in vm.film.genres">
+            <span>{{genre.name}}</span>
+        </div>
+    </dd>
+    <dt>
+        Actors
+    </dt>
+    <dd>
+
+        <!--sidjiao-->
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                    <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
+                        <th ><span translate="global.field.id">ID</span></th>
+                        <th ><span translate="film.actor.firstName">Date of birth</span> </th>
+                        <th ><span translate="film.actor.lastName">Date of birth</span> </th>
+                        <th ><span translate="film.actor.bornDate">Date of birth</span> </th>
+                        <th><span>Role</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="actorRole in vm.film.actorRoles">
+                        <td><a ui-sref="actor-detail({id:actorRole.actor.id})">{{actorRole.actor.id}}</a></td>
+                        <td>{{actorRole.actor.firstName}}</td>
+                        <td>{{actorRole.actor.lastName}}</td>
+                        <td>{{actorRole.actor.bornDate}}</td>
+                        <td>{{actorRole.roleName}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!--saodjsiauohdoas-->
+    </dd>
+
+</dl>
 </div>
 
 <div class="well">
@@ -25,11 +67,11 @@
             <iframe width="854" height="480" ng-src="{{vm.getTrailerEmbeddedLink(trailer)}}" frameborder="0" allowfullscreen></iframe>
         </div>
     </div>
-    
-     <form name="commentForm" role="form" novalidate ng-submit="vm.saveTrailer()" show-validation>
+
+    <form name="commentForm" role="form" novalidate ng-submit="vm.saveTrailer()" show-validation>
         <div class="form-group">
             <input type="text" class="form-control" name="description"
-                      ng-model="vm.newTrailer.uri" ng-minlength=1>
+                   ng-model="vm.newTrailer.uri" ng-minlength=1>
         </div>
         <button type="submit" ng-disabled="editForm.$invalid" class="btn btn-primary text-center">
             <span class="glyphicon glyphicon-save"></span>&nbsp;<span translate="film.saveTrailer">Save</span>
