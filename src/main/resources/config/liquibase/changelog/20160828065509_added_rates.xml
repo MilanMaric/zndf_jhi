@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <changeSet author="milan (generated)" id="1472367327123-1">
+        <createTable tableName="jpa_film_rate">
+            <column name="rate" type="INT"/>
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="film_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="milan (generated)" id="1472367327123-2">
+        <addPrimaryKey columnNames="film_id, user_id" constraintName="jpa_film_ratePK" tableName="jpa_film_rate"/>
+    </changeSet>
+    <changeSet author="milan (generated)" id="1472367327123-3">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="jpa_film_rate" constraintName="FK_8t0j1i254y7jqxqg30e4equiw" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="jhi_user"/>
+    </changeSet>
+    <changeSet author="milan (generated)" id="1472367327123-4">
+        <addForeignKeyConstraint baseColumnNames="film_id" baseTableName="jpa_film_rate" constraintName="FK_dtve8vh1hsem449h25nm03ik8" deferrable="false" initiallyDeferred="false" referencedColumnNames="id" referencedTableName="jhi_film"/>
+    </changeSet>
+</databaseChangeLog>

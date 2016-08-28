@@ -12,12 +12,16 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import javax.inject.Inject;
+import javax.validation.Valid;
 import net.etfbl.ip.zndf.domain.Comment;
 import net.etfbl.ip.zndf.domain.Film;
+import net.etfbl.ip.zndf.domain.FilmRate;
+import net.etfbl.ip.zndf.domain.RateId;
 import net.etfbl.ip.zndf.domain.Trailer;
 import net.etfbl.ip.zndf.domain.User;
 import net.etfbl.ip.zndf.repository.ActorRolesRepository;
 import net.etfbl.ip.zndf.repository.CommentsRepository;
+import net.etfbl.ip.zndf.repository.FilmRatesRepository;
 import net.etfbl.ip.zndf.repository.FilmRepository;
 import net.etfbl.ip.zndf.repository.TrailerRepository;
 import net.etfbl.ip.zndf.repository.UserRepository;
@@ -27,6 +31,7 @@ import net.etfbl.ip.zndf.web.rest.util.HeaderUtil;
 import net.etfbl.ip.zndf.web.rest.util.PaginationUtil;
 import net.etfbl.ip.zndf.web.rest.vm.CommentVM;
 import net.etfbl.ip.zndf.web.rest.vm.FilmVM;
+import net.etfbl.ip.zndf.web.rest.vm.RateVM;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -70,6 +75,9 @@ public class FilmResource {
 
     @Inject
     private UserService userService;
+
+    @Inject
+    private FilmRatesRepository filmRatesRepository;
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
@@ -234,6 +242,49 @@ public class FilmResource {
         }
     }
 
+    @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, path = "/{id}/rate")
+    @Timed
+    @Secured(AuthoritiesConstants.USER)
+    public ResponseEntity<RateVM> rate(@PathVariable Long id, @RequestBody @Valid RateVM rate) throws URISyntaxException {
+        Film film = filmRepository.findOne(id);
+        if (film != null) {
+            User user = userService
+                    .getUserWithAuthorities();
+            RateId rateId = new RateId(film, user);
+            FilmRate filmRate = new FilmRate();
+            filmRate.setId(rateId);
+            filmRate.setRate(rate.getRate());
+            filmRatesRepository.save(filmRate);
+            Double filmAvgRate = filmRatesRepository.getFilmAverageRate(film.getId());
+            log.debug("Film rate after save: {}", filmAvgRate);
+            film.setRate(filmAvgRate);
+            filmRepository.save(film);
+            return ResponseEntity.ok().body(rate);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, path = "/{id}/rate")
+    @Timed
+    @Secured(AuthoritiesConstants.USER)
+    public ResponseEntity<RateVM> getRate(@PathVariable Long id) throws URISyntaxException {
+        Film film = filmRepository.findOne(id);
+        if (film != null) {
+            User user = userService
+                    .getUserWithAuthorities();
+            RateId rateId = new RateId(film, user);
+            FilmRate filmRate = filmRatesRepository.findOne(rateId);
+            if (filmRate != null) {
+                return ResponseEntity.ok().body(new RateVM(filmRate));
+            } else {
+                return ResponseEntity.ok().body(new RateVM(0));
+            }
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, path = "/favorites")
     @Timed
     public ResponseEntity<List<FilmVM>> getAll() throws URISyntaxException {
@@ -243,4 +294,9 @@ public class FilmResource {
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
+//    @RequestMapping(value = "/feed/", produces = "application/*")
+//    public FilmsRssFeedView getFeed() {
+//        log.debug("getFeed()");
+//        return filmsRssFeedView;
+//    }
 }
