@@ -35,6 +35,7 @@ import net.etfbl.ip.zndf.web.rest.util.HeaderUtil;
 import net.etfbl.ip.zndf.web.rest.util.PaginationUtil;
 import net.etfbl.ip.zndf.web.rest.vm.CommentVM;
 import net.etfbl.ip.zndf.web.rest.vm.FilmVM;
+import net.etfbl.ip.zndf.web.rest.vm.LikeVM;
 import net.etfbl.ip.zndf.web.rest.vm.RateVM;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -205,6 +206,18 @@ public class FilmResource {
         }
     }
 
+    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, path = "/{id}/trailers")
+    @Timed
+    public ResponseEntity<List<Trailer>> saveTrailer(@PathVariable Long id) throws URISyntaxException {
+        Film film = filmRepository.findOne(id);
+        if (film != null) {
+            List<Trailer> list = trailerRepository.findAllByFilm(film);
+            return ResponseEntity.ok().body(list);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
     @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, path = "/{id}/trailer")
     @Timed
     public ResponseEntity<Trailer> uploadTrailer(HttpServletRequest request, @PathVariable Long id, @RequestPart MultipartFile video) throws URISyntaxException, IOException {
@@ -227,7 +240,7 @@ public class FilmResource {
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, path = "/{id}/like")
     @Timed
     @Secured(AuthoritiesConstants.USER)
-    public ResponseEntity<Boolean> checkLike(@PathVariable Long id) throws URISyntaxException {
+    public ResponseEntity<LikeVM> checkLike(@PathVariable Long id) throws URISyntaxException {
         Film film = filmRepository.findOne(id);
         if (film != null) {
             List<Film> films = userService
@@ -237,7 +250,7 @@ public class FilmResource {
                         return Objects.equals(f.getId(), film.getId());
                     })
                     .collect(Collectors.toList());
-            return ResponseEntity.ok().body(films.size() == 1);
+            return ResponseEntity.ok().body(new LikeVM(films.size() == 1));
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -246,7 +259,7 @@ public class FilmResource {
     @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, path = "/{id}/like")
     @Timed
     @Secured(AuthoritiesConstants.USER)
-    public ResponseEntity<Boolean> like(@PathVariable Long id) throws URISyntaxException {
+    public ResponseEntity<LikeVM> like(@PathVariable Long id) throws URISyntaxException {
         Film film = filmRepository.findOne(id);
         if (film != null) {
             User user = userService
@@ -260,9 +273,9 @@ public class FilmResource {
             if (films.size() == 0) {
                 user.getFavoriteFilms().add(film);
                 userRepository.save(user);
-                return ResponseEntity.ok().body(true);
+                return ResponseEntity.ok().body(new LikeVM(true));
             } else {
-                return ResponseEntity.ok().body(true);
+                return ResponseEntity.ok().body(new LikeVM(true));
             }
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

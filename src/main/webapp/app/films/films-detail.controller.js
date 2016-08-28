@@ -78,14 +78,15 @@
 
         function checkFavorite() {
             Film.checkFavorite({id: $stateParams.id}, function (data) {
-                console.log(data);
-                vm.favorite = data;
+                vm.favorite = data.status;
             });
         }
 
         function setFavorite() {
             if (!vm.favorite) {
-                vm.favorite = Film.setFavorite({id: $stateParams.id});
+                Film.setFavorite({id: $stateParams.id},{}, function (data) {
+                    vm.favorite = data.status;
+                });
             }
         }
 
@@ -94,8 +95,8 @@
         }
 
         function setRate() {
-            if(vm.rate.rate==0)
-                vm.rate.rate=1;
+            if (vm.rate.rate == 0)
+                vm.rate.rate = 1;
             vm.rate = Film.setRate({id: $stateParams.id}, vm.rate);
         }
     }
