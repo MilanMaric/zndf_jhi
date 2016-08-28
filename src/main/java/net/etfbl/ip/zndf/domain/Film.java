@@ -52,7 +52,6 @@ public class Film extends AbstractAuditingEntity implements Serializable {
     private String description;
 
     @Column(name = "rate")
-    @JsonIgnore
     private Double rate;
 
     @Column(name = "duration")

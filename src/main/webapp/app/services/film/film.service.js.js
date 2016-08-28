@@ -21,9 +21,11 @@
             'saveComment': {method: 'POST', url: '/api/films/:id/comments'},
             'saveTrailer': {method: 'POST', url: '/api/films/:id/trailers'},
             'getTrailers': {method: 'GET', url: '/api/films/:id/trailers', isArray: true},
-            'getFavorites':{method:'GET',url:'/api/films/favorites',isArray:true},
-            'checkFavorite':{method:'GET',url:'/api/films/:id/like'},
-            'setFavorite':{method:'POST',url:'/api/films/:id/like'}
+            'getFavorites': {method: 'GET', url: '/api/films/favorites', isArray: true},
+            'checkFavorite': {method: 'GET', url: '/api/films/:id/like'},
+            'setFavorite': {method: 'POST', url: '/api/films/:id/like'},
+            'checkRate': {method: 'GET', url: '/api/films/:id/rate'},
+            'setRate': {method: 'POST', url: '/api/films/:id/rate'}
         }
         );
         return service;

@@ -20,11 +20,13 @@
         vm.loadTrailers = loadTrailers;
         vm.getTrailerEmbeddedLink = getTrailerEmbeddedLink;
         vm.checkFavorite = checkFavorite;
-        vm.setFavorite=setFavorite;
-        
+        vm.setFavorite = setFavorite;
+        vm.getRate = getRate;
+        vm.setRate = setRate;
+
         checkFavorite();
-        
-        
+        getRate();
+
         function load(id) {
             Film.get({id: id}, function (result) {
                 vm.film = result;
@@ -75,13 +77,26 @@
         }
 
         function checkFavorite() {
-            vm.favorite = Film.checkFavorite({id: $stateParams.id});
+            Film.checkFavorite({id: $stateParams.id}, function (data) {
+                console.log(data);
+                vm.favorite = data;
+            });
         }
 
         function setFavorite() {
             if (!vm.favorite) {
                 vm.favorite = Film.setFavorite({id: $stateParams.id});
             }
+        }
+
+        function getRate() {
+            vm.rate = Film.checkRate({id: $stateParams.id});
+        }
+
+        function setRate() {
+            if(vm.rate.rate==0)
+                vm.rate.rate=1;
+            vm.rate = Film.setRate({id: $stateParams.id}, vm.rate);
         }
     }
 })();

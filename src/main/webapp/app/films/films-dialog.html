@@ -16,7 +16,7 @@
             <div class="form-group">
                 <label class="control-label" translate="film.title">Title</label>
                 <input type="text" class="form-control" name="title"
-                       ng-model="vm.film.title" ng-required="true" ng-minlength=1 ng-maxlength=50 ng-pattern="/^[_'.@A-Za-z0-9-]*$/">
+                       ng-model="vm.film.title" ng-required="true" ng-minlength=1 ng-maxlength=50>
 
                 <div ng-show="editForm.title.$invalid">
                     <p class="help-block"
@@ -33,7 +33,7 @@
             </div>
 
             <div class="form-group">
-                <label class="control-label" translate="film.duration">Description</label>
+                <label class="control-label" translate="film.duration">Duration</label>
                 <input type="number" class="form-control" name="duration"
                        ng-model="vm.film.duration" ng-required="vm.film.id == null">
 
@@ -41,12 +41,6 @@
                     <p class="help-block"
                        ng-show="editForm.duration.$error.required" translate="entity.validation.required">
                         This field is required.
-                    </p>
-
-                    <p class="help-block"
-                       ng-show="editForm.description.$error.maxlength" translate="entity.validation.maxlength"
-                       translate-value-max="50">
-                        This field cannot be longer than 50 characters.
                     </p>
                 </div>
             </div>

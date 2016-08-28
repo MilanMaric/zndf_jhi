@@ -9,55 +9,63 @@
             <span class="glyphicon glyphicon-star"></span>
             <span>This film is in your favorites</span>
         </div>
+
     </div>
+    <jk-rating-stars 
+        max-rating="10" 
+        rating="vm.rate.rate" 
+        on-rating="vm.setRate(vm.rate)"
+        >
+    </jk-rating-stars>
 </div>
-<dl class="dl-horizontal">
-    <dt><span translate="film.id">Id</span></dt>
-    <dd><span>{{vm.film.id}}</span></dd>
-    <dt><span translate="film.title">Title</span></dt>
-    <dd><span>{{vm.film.title}}</span>
-    <dt><span translate="film.description">Description</span></dt>
-    <dd><span>{{vm.film.description}}</span>
-    <dt><span translate="film.duration">Duration</span></dt>
-    <dd><span>{{vm.film.duration}}</span>
-    <dt translate="film.genres">Genres</dt>
-    <dd>
-        <div ng-repeat="genre in vm.film.genres">
-            <span>{{genre.name}}</span>
-        </div>
-    </dd>
-    <dt>
-        Actors
-    </dt>
-    <dd>
+<div class="well">
+    <dl class="dl-horizontal">
+        <dt><span translate="film.id">Id</span></dt>
+        <dd><span>{{vm.film.id}}</span></dd>
+        <dt><span translate="film.title">Title</span></dt>
+        <dd><span>{{vm.film.title}}</span>
+        <dt><span translate="film.description">Description</span></dt>
+        <dd><span>{{vm.film.description}}</span>
+        <dt><span translate="film.duration">Duration</span></dt>
+        <dd><span>{{vm.film.duration}}</span>
+        <dt translate="film.genres">Genres</dt>
+        <dd>
+            <div ng-repeat="genre in vm.film.genres">
+                <span>{{genre.name}}</span>
+            </div>
+        </dd>
+        <dt>
+            Actors
+        </dt>
+        <dd>
 
-        <!--sidjiao-->
-        <div class="table-responsive">
-            <table class="table table-striped">
-                <thead>
-                    <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
-                        <th ><span translate="global.field.id">ID</span></th>
-                        <th ><span translate="film.actor.firstName">Date of birth</span> </th>
-                        <th ><span translate="film.actor.lastName">Date of birth</span> </th>
-                        <th ><span translate="film.actor.bornDate">Date of birth</span> </th>
-                        <th><span>Role</span></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr ng-repeat="actorRole in vm.film.actorRoles">
-                        <td><a ui-sref="actor-detail({id:actorRole.actor.id})">{{actorRole.actor.id}}</a></td>
-                        <td>{{actorRole.actor.firstName}}</td>
-                        <td>{{actorRole.actor.lastName}}</td>
-                        <td>{{actorRole.actor.bornDate}}</td>
-                        <td>{{actorRole.roleName}}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <!--saodjsiauohdoas-->
-    </dd>
+            <!--sidjiao-->
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
+                            <th ><span translate="global.field.id">ID</span></th>
+                            <th ><span translate="film.actor.firstName">Date of birth</span> </th>
+                            <th ><span translate="film.actor.lastName">Date of birth</span> </th>
+                            <th ><span translate="film.actor.bornDate">Date of birth</span> </th>
+                            <th><span>Role</span></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="actorRole in vm.film.actorRoles">
+                            <td><a ui-sref="actor-detail({id:actorRole.actor.id})">{{actorRole.actor.id}}</a></td>
+                            <td>{{actorRole.actor.firstName}}</td>
+                            <td>{{actorRole.actor.lastName}}</td>
+                            <td>{{actorRole.actor.bornDate}}</td>
+                            <td>{{actorRole.roleName}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!--saodjsiauohdoas-->
+        </dd>
 
-</dl>
+    </dl>
 </div>
 
 <div class="well">
