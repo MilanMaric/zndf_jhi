@@ -1,20 +1,45 @@
 <div ng-cloak>
     <div class="row">
-        <div class="well col-md-4">
-            <h3>{{vm.feed.description}}</h3>
-            <div class="list-group">
-                <div class="list-group-item" ng-repeat="entry in vm.feed.entries">
-                    <div class="row-action-primary">
-                        <i class="material-icons">{{entry.title.charAt(0)}}</i>
+        <div class="col-md-4">
+            <div class="well">
+                <h1 translate="home.title">Welcome, Java Hipster!</h1>
+
+                <div ng-switch="vm.isAuthenticated()">
+                    <div class="alert alert-success" ng-switch-when="true" translate="home.logged.message" translate-values="{username: '{{vm.account.login}}'}">
+                        You are logged in as user "{{vm.account.login}}".
                     </div>
-                    <div class="row-content">
-                        <h5 class="list-group-item-heading">{{entry.title}}</h5>
-                        <p class="list-group-item-text">{{entry.contentSnippet}}</p>
-                        <p class="list-group-item-text"><a target="_new" ng-href="{{entry.link}}">More details</a></p>
+                    <div ng-switch-when="true">
+                        <img class="img-responsive img-circle" src="http://www.startupdb.asia/assets/images/team.default.png" ng-if="!vm.image">
+                        <img class="img-responsive img-circle" ng-src="{{'/content/images/' + vm.image}}" ng-if="vm.image">
+                    </div>
+
+                    <div class="alert alert-warning" ng-switch-when="false" translate="global.messages.info.authenticated" translate-compile>
+                        If you want to <a class="alert-link" href="" ng-click="vm.login()">sign in</a>, you can try the default accounts:<br/>- Administrator (login="admin" and password="admin") <br/>- User (login="user" and password="user").
+                    </div>
+
+                    <div class="alert alert-warning" ng-switch-when="false" translate="global.messages.info.register" translate-compile>
+                        You don't have an account yet? <a class="alert-link" ui-sref="register">Register a new account</a>
                     </div>
                 </div>
             </div>
-            <uib-pagination class="pagination-sm" total-items="100" ng-model="vm.feedsPage" ng-change="vm.getFeeds()"></uib-pagination>
+
+
+            <div class="well">
+                <h3>{{vm.feed.description}}</h3>
+                <div class="list-group">
+                    <div class="list-group-item" ng-repeat="entry in vm.feed.entries">
+                        <div class="row-action-primary">
+                            <i class="material-icons">{{entry.title.charAt(0)}}</i>
+                        </div>
+                        <div class="row-content">
+                            <h5 class="list-group-item-heading">{{entry.title}}</h5>
+                            <p class="list-group-item-text">{{entry.contentSnippet}}</p>
+                            <p class="list-group-item-text"><a target="_new" ng-href="{{entry.link}}">More details</a></p>
+                        </div>
+                    </div>
+                </div>
+                <uib-pagination class="pagination-sm" total-items="100" ng-model="vm.feedsPage" ng-change="vm.getFeeds()"></uib-pagination>
+            </div>
         </div>
 
 
@@ -52,7 +77,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="well" ng-if="vm.isAuthenticated()">
                 <h1>Favorites</h1>
                 <div class="list-group">
@@ -71,7 +96,7 @@
                                 Release date: {{film.releaseDate}}, Duration {{film.duration}}
                             </p>
 
-                                    <a ui-sref="film-detail({id:film.id})">More details</a>
+                            <a ui-sref="film-detail({id:film.id})">More details</a>
 
                         </div>
                     </div>

@@ -5,9 +5,9 @@
             .module('zndfApp')
             .controller('HomeController', HomeController);
 
-    HomeController.$inject = ['$scope', 'Principal', 'LoginService', '$state', 'Film', 'ParseLinks', 'AlertService', 'OMDB'];
+    HomeController.$inject = ['$scope', 'Principal', 'LoginService', '$state', 'Film', 'ParseLinks', 'AlertService', 'OMDB', 'Account'];
 
-    function HomeController($scope, Principal, LoginService, $state, Film, ParseLinks, AlertService, OMDB) {
+    function HomeController($scope, Principal, LoginService, $state, Film, ParseLinks, AlertService, OMDB, Account) {
         var vm = this;
 
         vm.account = null;
@@ -18,6 +18,8 @@
         vm.films = [];
         vm.feed = {};
         vm.register = register;
+
+
         $scope.$on('authenticationSuccess', function () {
             getAccount();
         });
@@ -33,6 +35,11 @@
             Principal.identity().then(function (account) {
                 vm.account = account;
                 vm.isAuthenticated = Principal.isAuthenticated;
+                Account.getImage(function (data) {
+                    if (data) {
+                        vm.image = data.image;
+                    }
+                });
             });
         }
         function register() {
@@ -81,9 +88,9 @@
                 page: 1
             });
         }
-        
-        function getFavorites(){
-            vm.favorites=Film.getFavorites();
+
+        function getFavorites() {
+            vm.favorites = Film.getFavorites();
         }
     }
 })();

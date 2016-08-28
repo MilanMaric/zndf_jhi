@@ -6,12 +6,15 @@
 package net.etfbl.ip.zndf.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import net.etfbl.ip.zndf.domain.Comment;
 import net.etfbl.ip.zndf.domain.Film;
@@ -26,6 +29,7 @@ import net.etfbl.ip.zndf.repository.FilmRepository;
 import net.etfbl.ip.zndf.repository.TrailerRepository;
 import net.etfbl.ip.zndf.repository.UserRepository;
 import net.etfbl.ip.zndf.security.AuthoritiesConstants;
+import net.etfbl.ip.zndf.service.FileService;
 import net.etfbl.ip.zndf.service.UserService;
 import net.etfbl.ip.zndf.web.rest.util.HeaderUtil;
 import net.etfbl.ip.zndf.web.rest.util.PaginationUtil;
@@ -46,7 +50,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -78,6 +84,9 @@ public class FilmResource {
 
     @Inject
     private FilmRatesRepository filmRatesRepository;
+
+    @Inject
+    private FileService fileService;
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
@@ -184,16 +193,34 @@ public class FilmResource {
         }
     }
 
-    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, path = "/{id}/trailers")
+    @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, path = "/{id}/trailer/{trailerId}")
     @Timed
-    @Secured(AuthoritiesConstants.USER)
-    public ResponseEntity<List<Trailer>> saveTrailer(@PathVariable Long id) throws URISyntaxException {
+    public void downloadTrailer(@PathVariable Long id, @PathVariable Long trailerId, HttpServletResponse response) throws URISyntaxException, IOException {
         Film film = filmRepository.findOne(id);
         if (film != null) {
-            List<Trailer> list = trailerRepository.findAllByFilm(film);
-            return ResponseEntity.ok().body(list);
+            Trailer trailer = trailerRepository.findOne(trailerId);
+            if (trailer.getInternal()) {
+                fileService.downloadFile(response, "C://trailers", trailer.getUri());
+            }
+        }
+    }
+
+    @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, path = "/{id}/trailer")
+    @Timed
+    public ResponseEntity<Trailer> uploadTrailer(HttpServletRequest request, @PathVariable Long id, @RequestPart MultipartFile video) throws URISyntaxException, IOException {
+        Film film = filmRepository.findOne(id);
+        if (film != null) {
+            Trailer trailer = new Trailer();
+            trailer.setFilm(film);
+            trailer.setInternal(true);
+            trailer.setActive(true);
+            String returnStr;
+            returnStr = fileService.uploadFile(video, "C://trailers");
+            trailer.setUri(returnStr);
+            Trailer newTrailer = trailerRepository.save(trailer);
+            return ResponseEntity.ok().body(newTrailer);
         } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("trailer", "", "")).body(null);
         }
     }
 

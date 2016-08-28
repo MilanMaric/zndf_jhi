@@ -45,6 +45,17 @@ public class Trailer extends AbstractAuditingEntity implements Serializable {
     @Column(name = "URI", length = 1024)
     String uri;
 
+    @Column(name = "internal")
+    private Boolean internal = false;
+
+    public Boolean getInternal() {
+        return internal;
+    }
+
+    public void setInternal(Boolean internal) {
+        this.internal = internal;
+    }
+
     @NotNull
     @ManyToOne
     @JsonIgnore

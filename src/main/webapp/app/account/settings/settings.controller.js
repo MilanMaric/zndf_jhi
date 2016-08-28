@@ -16,7 +16,9 @@
         vm.success = null;
         vm.saveImage = saveImage;
         Account.getImage(function (data) {
-            vm.image = data.image;
+            if (data) {
+                vm.image = data.image;
+            }
         });
         /**
          * Store the "settings account" in a separate variable, and not in the shared "account" variable.
@@ -58,7 +60,7 @@
             if (vm.newImage) {
                 Account.saveImage(vm.newImage, function (data) {
                     vm.image = data.image;
-                    vm.newImage={};
+                    vm.newImage = {};
                 }, function (err) {
                     console.log(err);
                 });
