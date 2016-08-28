@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title th:text="#{email.notification.title(${event.name}}">JHipster password reset</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    </head>
+    <body>
+        <p th:text="#{email.notification.greeting(${user.lastName})}">
+            Dear
+        </p>
+        <p th:text="#{email.notification.text1(${event.name})}">
+            For your JHipster account a password reset was requested, please click on the URL below to reset it:
+        </p>
+        <p th:text="#{email.notification.location(${event.location})}"></p>
+        <p th:text="#{email.notification.time(${event.eventTime})}"></p>
+        <p>
+            <span th:text="#{email.reset.text2}">Regards, </span>
+            <br/>
+            <em th:text="#{email.signature}">ZNDF.</em>
+        </p>
+    </body>
+</html>
