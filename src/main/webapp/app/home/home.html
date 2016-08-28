@@ -27,7 +27,7 @@
                             <i class="material-icons">{{film.title.charAt(0)}}</i>
                         </div>
                         <div class="row-content">
-                            <div class="least-content">{{film.rating}}</div>
+                            <div class="least-content"><span class="badge">{{film.rating}}</span></div>
                             <h4 class="list-group-item-heading">{{film.title}}</h4>
                             <p class="list-group-item-text">
                                 {{film.description}}
@@ -38,7 +38,7 @@
                             </p>
                             <div ng-switch="vm.isAuthenticated()">
                                 <div ng-switch-when="true">
-                                    <a ui-sref="film-detail({id:film.id})">More details</a>
+                                    <a ui-sref="films-detail({id:film.id})">More details</a>
                                 </div>
 
                                 <div ng-switch-when="false">

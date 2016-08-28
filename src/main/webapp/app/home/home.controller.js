@@ -60,7 +60,6 @@
 
         function transition() {
             vm.page = vm.page++;
-
         }
 
         function getFeeds() {

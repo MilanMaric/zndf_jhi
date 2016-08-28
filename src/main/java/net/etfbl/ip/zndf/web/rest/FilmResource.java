@@ -294,9 +294,4 @@ public class FilmResource {
         return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
-//    @RequestMapping(value = "/feed/", produces = "application/*")
-//    public FilmsRssFeedView getFeed() {
-//        log.debug("getFeed()");
-//        return filmsRssFeedView;
-//    }
 }

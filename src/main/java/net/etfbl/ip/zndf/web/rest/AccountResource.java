@@ -19,6 +19,7 @@ import net.etfbl.ip.zndf.service.MailService;
 import net.etfbl.ip.zndf.service.UserService;
 import net.etfbl.ip.zndf.service.dto.UserDTO;
 import net.etfbl.ip.zndf.web.rest.util.HeaderUtil;
+import net.etfbl.ip.zndf.web.rest.vm.ImageVM;
 import net.etfbl.ip.zndf.web.rest.vm.KeyAndPasswordVM;
 import net.etfbl.ip.zndf.web.rest.vm.ManagedUserVM;
 import org.apache.commons.lang.StringUtils;
@@ -179,6 +180,7 @@ public class AccountResource {
     /**
      * POST /account/image : update user image
      *
+     * @param request
      * @param image
      * @return the ResponseEntity with status 200 (OK), or status 400 (Bad
      * Request) or 500 (Internal Server Error) if the user couldn't be updated
@@ -188,7 +190,7 @@ public class AccountResource {
                     produces = MediaType.APPLICATION_JSON_VALUE,
                     consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @Timed
-    public ResponseEntity<String> saveImage(HttpServletRequest request, @RequestPart MultipartFile image) {
+    public ResponseEntity<ImageVM> saveImage(HttpServletRequest request, @RequestPart MultipartFile image) {
         User existingUser = userService.getUserWithAuthorities();
         String returnStr;
         String path = request.getServletContext().getRealPath("/") + "content/images";
@@ -201,11 +203,24 @@ public class AccountResource {
                 returnStr = fileService.uploadFile(image, path);
                 existingUser.setImage(returnStr);
                 userRepository.save(existingUser);
-                return ResponseEntity.ok().body(returnStr);
+                return ResponseEntity.ok().body(new ImageVM(returnStr));
             } catch (IOException ex) {
                 java.util.logging.Logger.getLogger(AccountResource.class.getName()).log(Level.SEVERE, null, ex);
             }
             return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("user-management", "", "")).body(null);
+        }
+    }
+
+    @RequestMapping(value = "/account/image",
+                    method = RequestMethod.GET,
+                    produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<ImageVM> getImage() {
+        User existingUser = userService.getUserWithAuthorities();
+        if (existingUser == null) {
+            return ResponseEntity.badRequest().headers(HeaderUtil.createFailureAlert("user-management", "", "")).body(null);
+        } else {
+            return ResponseEntity.ok().body(new ImageVM(existingUser.getImage()));
         }
     }
 
