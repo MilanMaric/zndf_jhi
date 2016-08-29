@@ -10,7 +10,8 @@
     function Comment($resource) {
         var service = $resource('/api/', {}, {
             'query': {method: 'GET', isArray: true, url: '/api/films/:id/comments'},
-            'save': {method: 'POST', url: '/api/films/:id/comments'}
+            'save': {method: 'POST', url: '/api/films/:id/comments'},
+            'delete':{method:'DELETE',url:'/api/films/:id/comments/:commentId'}
         });
 
         return service;

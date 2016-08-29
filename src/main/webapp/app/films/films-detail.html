@@ -105,6 +105,12 @@
                 <h5 class="list-group-item-heading">{{comment.text}}</h5>
                 <p class="list-group-item-text">{{comment.createdDate}}</p>
             </div>
+            <div has-authority="ROLE_ADMIN" class='pull-right'>
+                <button class="btn btn-danger" ng-click='vm.deleteComment(comment)'>
+                    <span class="glyphicon glyphicon-remove-circle"></span>
+                    <span class="hidden-xs hidden-sm" >Delete comment</span>
+                </button>
+            </div>
             <span class="list-group-separator"></span>
         </div>
     </div>

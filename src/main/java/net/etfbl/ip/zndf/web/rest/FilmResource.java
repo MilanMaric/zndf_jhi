@@ -180,6 +180,20 @@ public class FilmResource {
         }
     }
 
+    @RequestMapping(method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE, path = "/{id}/comments/{commentId}")
+    @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
+    public ResponseEntity<Void> deleteComment(@PathVariable Long id, @PathVariable Long commentId) throws URISyntaxException {
+        Comment commentObject = commentsRepository.findOne(commentId);
+        if (commentObject != null && commentObject.getFilm().getId().equals(id)) {
+            commentObject.setActive(false);
+            commentsRepository.save(commentObject);
+            return ResponseEntity.ok().headers(HeaderUtil.createAlert("comment.deleted", commentId.toString())).build();
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
     @RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, path = "/{id}/trailers")
     @Timed
     @Secured(AuthoritiesConstants.USER)

@@ -23,6 +23,7 @@
         vm.setFavorite = setFavorite;
         vm.getRate = getRate;
         vm.setRate = setRate;
+        vm.deleteComment=deleteComment;
 
         checkFavorite();
         getRate();
@@ -98,6 +99,15 @@
             if (vm.rate.rate == 0)
                 vm.rate.rate = 1;
             vm.rate = Film.setRate({id: $stateParams.id}, vm.rate);
+        }
+        
+        function deleteComment(comment){
+            Comment.delete({id:$stateParams.id,commentId:comment.id},function(){
+               var index=vm.comments.indexOf(comment);
+               if(index>=0){
+                   vm.comments.splice(index,1);
+               }
+            });
         }
     }
 })();
