@@ -72,26 +72,46 @@
     <h3 translate="film.trailers">Trailers</h3>
     <div class="list-group">
         <div class="list-group-item list-group-item" ng-repeat="trailer in vm.trailers">
-            <div ng-if="trailer.internal">
-                <a target="_new" ng-href="{{'/api/films/' + vm.film.id + '/trailer/' + trailer.id}}">Download </a>
+            <div class="row-action-primary">
+                <i class="material-icons">{{trailer.id}}</i>
             </div>
-            <div ng-if="!trailer.internal">
-                <iframe width="854" height="480" ng-src="{{vm.getTrailerEmbeddedLink(trailer)}}" frameborder="0" allowfullscreen></iframe>
+            <div class="row-content">
+                <div ng-if="trailer.internal">
+                    <a target="_new" ng-href="{{'/api/films/' + vm.film.id + '/trailer/' + trailer.id}}"><h3>Download</h3> </a>
+                </div>
+                <div ng-if="!trailer.internal">
+                    <!--                <iframe width="854" height="480" ng-src="{{vm.getTrailerEmbeddedLink(trailer)}}" frameborder="0" allowfullscreen></iframe>-->
+                    <a target="_new" ng-href="{{trailer.uri}}"><h3>Link</h3></a>
+                </div>
             </div>
         </div>
     </div>
 
-    <form name="commentForm" role="form" novalidate ng-submit="vm.saveTrailer()" show-validation>
+    <form name="trailerForm" role="form" novalidate ng-submit="vm.saveTrailer()" show-validation>
         <div class="form-group">
-            <input type="text" class="form-control" name="description"
-                   ng-model="vm.newTrailer.uri" ng-minlength=1>
+            <input type="url" class="form-control" name="uri"
+                   ng-model="vm.newTrailer.uri" ng-minlength=1 placeholder="Add trailer link">
+            <p class="help-block"
+               ng-show="trailerForm.uri.$error">
+                Your input must be valid!
+            </p> 
         </div>
-        <button type="submit" ng-disabled="editForm.$invalid" class="btn btn-primary text-center">
+        <button type="submit" ng-enabled="trailerForm.$valid" class="btn btn-primary text-center">
             <span class="glyphicon glyphicon-save"></span>&nbsp;<span translate="film.saveTrailer">Save</span>
         </button>
     </form>
 </div>
 
+<div class="well well-inverse" has-authority="ROLE_SUPERUSER">
+    <form name="fileForm" novalidate ng-submit="vm.saveVideo()">
+        <div class="form-group">
+            <input type="file" id="inputFile3" file-model="vm.newVideo" required accept="image/*">
+            <input type="text" readonly="" class="form-control" placeholder="Select file...">
+        </div>
+
+        <button type="submit"  ng-disabled="fileForm.$invalid" class="btn btn-primary">Save</button>
+    </form>
+</div>
 <div class="well ">
     <h3 translate="film.comments">Comments</h3>
     <div class="list-group">

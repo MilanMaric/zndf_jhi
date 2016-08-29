@@ -92,14 +92,14 @@
                 <img class="img-responsive img-circle" src="http://www.startupdb.asia/assets/images/team.default.png" ng-if="!vm.image">
                 <img class="img-responsive img-circle" ng-src="{{'/content/images/' + vm.image}}" ng-if="vm.image">
             </div>
-            <form novalidate ng-submit="vm.saveImage()">
+            <form name="fileForm" novalidate ng-submit="vm.saveImage()">
    
                 <div class="form-group">
                     <input type="file" id="inputFile3" file-model="vm.newImage" required accept="image/*">
                     <input type="text" readonly="" class="form-control" placeholder="Select file...">
                 </div>
 
-                <button type="submit"  ng-disabled="form.$invalid" class="btn btn-primary">Save</button>
+                <button type="submit"  ng-disabled="fileForm.$invalid" class="btn btn-primary">Save</button>
             </form>
         </div>
     </div>

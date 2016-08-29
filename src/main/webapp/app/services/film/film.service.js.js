@@ -25,7 +25,17 @@
             'checkFavorite': {method: 'GET', url: '/api/films/:id/like'},
             'setFavorite': {method: 'POST', url: '/api/films/:id/like'},
             'checkRate': {method: 'GET', url: '/api/films/:id/rate'},
-            'setRate': {method: 'POST', url: '/api/films/:id/rate'}
+            'setRate': {method: 'POST', url: '/api/films/:id/rate'},
+            'uploadVideo': {
+                method: 'POST',
+                url: '/api/films/:id/trailer',
+                headers: {'Content-Type': undefined},
+                transformRequest: function (data) {
+                    var fd = new FormData();
+                    fd.append("video", data);
+                    return fd;
+                }
+            }
         }
         );
         return service;

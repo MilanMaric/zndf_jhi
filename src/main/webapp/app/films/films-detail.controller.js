@@ -23,7 +23,8 @@
         vm.setFavorite = setFavorite;
         vm.getRate = getRate;
         vm.setRate = setRate;
-        vm.deleteComment=deleteComment;
+        vm.deleteComment = deleteComment;
+        vm.saveVideo = saveVideo;
 
         checkFavorite();
         getRate();
@@ -85,7 +86,7 @@
 
         function setFavorite() {
             if (!vm.favorite) {
-                Film.setFavorite({id: $stateParams.id},{}, function (data) {
+                Film.setFavorite({id: $stateParams.id}, {}, function (data) {
                     vm.favorite = data.status;
                 });
             }
@@ -100,14 +101,22 @@
                 vm.rate.rate = 1;
             vm.rate = Film.setRate({id: $stateParams.id}, vm.rate);
         }
-        
-        function deleteComment(comment){
-            Comment.delete({id:$stateParams.id,commentId:comment.id},function(){
-               var index=vm.comments.indexOf(comment);
-               if(index>=0){
-                   vm.comments.splice(index,1);
-               }
+
+        function deleteComment(comment) {
+            Comment.delete({id: $stateParams.id, commentId: comment.id}, function () {
+                var index = vm.comments.indexOf(comment);
+                if (index >= 0) {
+                    vm.comments.splice(index, 1);
+                }
             });
+        }
+
+        function saveVideo() {
+            if (vm.newVideo) {
+                Film.uploadVideo({id: $stateParams.id}, vm.newVideo, function (data) {
+                    vm.trailers.push(data);
+                });
+            }
         }
     }
 })();
