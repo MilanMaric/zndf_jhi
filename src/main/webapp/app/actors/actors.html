@@ -22,7 +22,7 @@
             </thead>
             <tbody>
                 <tr ng-repeat="actor in vm.actors track by actor.id">
-                    <td><a ui-sref="actor-detail({id:actor.id})">{{actor.id}}</a></td>
+                    <td><a ui-sref="actors-detail({id:actor.id})">{{actor.id}}</a></td>
                     <td>{{actor.firstName}}</td>
                     <td>{{actor.lastName}}</td>
                     <td>{{actor.bornDate}}</td>

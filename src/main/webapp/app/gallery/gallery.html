@@ -1,0 +1,22 @@
+<div>
+    <h2>Gallery</h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+        <div class="col-md-4" has-authority="ROLE_ADMIN">
+            <button class="btn btn-primary" ui-sref="gallery.new">
+                <span class="glyphicon glyphicon-flash"></span> <span>Upload new image</span>
+            </button>
+        </div>
+    </div>
+    <div class="well">
+        <div class='row'>
+            <div ng-repeat="gallery in vm.gallery">
+                <img ng-src="{{'/api/gallery/' + gallery.id}}" class='img-responsive col-md-4' role='button' ui-sref="gallery.detail({id:gallery.id})">
+            </div>
+        </div>
+    </div>
+    <div class="text-center">
+        <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"></jhi-item-count>
+        <uib-pagination class="pagination-sm" total-items="vm.totalItems" ng-model="vm.page" ng-change="vm.transition()"></uib-pagination>
+    </div>
+</div>

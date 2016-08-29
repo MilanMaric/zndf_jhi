@@ -155,7 +155,6 @@ public class FilmResource {
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, path = "/{id}/comments")
     @Timed
-    @Secured(AuthoritiesConstants.USER)
     public ResponseEntity<List<Comment>> getComments(@PathVariable Long id, Pageable pageable) throws URISyntaxException {
         Page<Comment> page = commentsRepository.findAllByFilmId(id, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/films/" + id + "/comments");

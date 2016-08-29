@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <changeSet author="milan (generated)" id="1472444893529-1">
+        <createTable tableName="jhi_gallery">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints primaryKey="true" primaryKeyName="jhi_galleryPK"/>
+            </column>
+            <column name="created_by" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_date" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_modified_by" type="VARCHAR(50)"/>
+            <column name="last_modified_date" type="datetime"/>
+            <column name="active" type="BOOLEAN"/>
+            <column name="uri" type="VARCHAR(255)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="milan (generated)" id="1472444893529-2">
+        <dropForeignKeyConstraint baseTableName="jhi_genre_films" constraintName="FK_27s8jpx4brl8hp5be444a40qv"/>
+    </changeSet>
+    <changeSet author="milan (generated)" id="1472444893529-3">
+        <dropForeignKeyConstraint baseTableName="jhi_genre_films" constraintName="FK_p29ca4nl09wdd9b0kyv4waarq"/>
+    </changeSet>
+    <changeSet author="milan (generated)" id="1472444893529-4">
+        <dropTable tableName="jhi_genre_films"/>
+    </changeSet>
+</databaseChangeLog>
