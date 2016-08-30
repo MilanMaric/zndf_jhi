@@ -1,0 +1,22 @@
+{
+    "event": {
+        "home": {
+            "title": "Events",
+            "createLabel": "Create a new event",
+            "createOrEditLabel": "Create or edit a event"
+        },
+        "created": "A new event is created with identifier {{ param }}",
+        "updated": "An event is updated with identifier {{ param }}",
+        "deleted": "An event is deleted with identifier {{ param }}",
+        "delete": {
+            "question": "Are you sure you want to delete event {{ login }}?"
+        },
+        "detail": {
+            "title": "Event"
+        },
+        "location": "Location",
+        "name": "Name",
+        "eventTime": "Time of the event",
+        "location": "Location"
+    }
+}

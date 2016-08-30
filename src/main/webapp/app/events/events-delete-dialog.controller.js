@@ -3,14 +3,14 @@
 
     angular
         .module('zndfApp')
-        .controller('ActorsDeleteController', ActorsDeleteController);
+        .controller('EventsDeleteController', EventsDeleteController);
 
-    ActorsDeleteController.$inject = ['$uibModalInstance', 'entity', 'Actor'];
+    EventsDeleteController.$inject = ['$uibModalInstance', 'entity', 'Event'];
 
-    function ActorsDeleteController ($uibModalInstance, entity, Actor) {
+    function EventsDeleteController ($uibModalInstance, entity, Event) {
         var vm = this;
 
-        vm.actor = entity;
+        vm.event = entity;
         vm.clear = clear;
         vm.confirmDelete = confirmDelete;
 
@@ -19,7 +19,7 @@
         }
 
         function confirmDelete (login) {
-            Actor.delete({login: login},
+            Event.delete({login: login},
                 function () {
                     $uibModalInstance.close(true);
                 });

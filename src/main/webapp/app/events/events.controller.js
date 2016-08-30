@@ -3,11 +3,11 @@
 
     angular
         .module('zndfApp')
-        .controller('ActorsController', ActorsController);
+        .controller('EventsController', EventsController);
 
-    ActorsController.$inject = ['Principal', 'Actor', 'ParseLinks', 'AlertService', '$state', 'pagingParams', 'paginationConstants', 'JhiLanguageService'];
+    EventsController.$inject = ['Principal', 'Event', 'ParseLinks', 'AlertService', '$state', 'pagingParams', 'paginationConstants', 'JhiLanguageService'];
 
-    function ActorsController(Principal, Actor, ParseLinks, AlertService, $state, pagingParams, paginationConstants, JhiLanguageService) {
+    function EventsController(Principal, Event, ParseLinks, AlertService, $state, pagingParams, paginationConstants, JhiLanguageService) {
         var vm = this;
 
         vm.authorities = ['ROLE_USER', 'ROLE_ADMIN'];
@@ -15,7 +15,7 @@
         vm.languages = null;
         vm.loadAll = loadAll;
         vm.setActive = setActive;
-        vm.actors = [];
+        vm.events = [];
         vm.page = 1;
         vm.totalItems = null;
         vm.clear = clear;
@@ -35,16 +35,16 @@
             vm.currentAccount = account;
         });
 
-        function setActive (actor, isActivated) {
-            actor.activated = isActivated;
-            Actor.update(actor, function () {
+        function setActive (event, isActivated) {
+            event.activated = isActivated;
+            Event.update(event, function () {
                 vm.loadAll();
                 vm.clear();
             });
         }
 
         function loadAll () {
-            Actor.query({
+            Event.query({
                 page: pagingParams.page - 1,
                 size: vm.itemsPerPage,
                 sort: sort()
@@ -52,9 +52,9 @@
         }
 
         function onSuccess(data, headers) {
-            //hide anonymous actor from actor management: it's a required actor for Spring Security
+            //hide anonymous event from event management: it's a required event for Spring Security
             for (var i in data) {
-                if (data[i]['login'] === 'anonymousactor') {
+                if (data[i]['login'] === 'anonymousevent') {
                     data.splice(i, 1);
                 }
             }
@@ -62,7 +62,7 @@
             vm.totalItems = headers('X-Total-Count');
             vm.queryCount = vm.totalItems;
             vm.page = pagingParams.page;
-            vm.actors = data;
+            vm.events = data;
         }
 
         function onError(error) {
@@ -70,7 +70,7 @@
         }
 
         function clear () {
-            vm.actor = {
+            vm.event = {
                 id: null, login: null, firstName: null, lastName: null, email: null,
                 activated: null, langKey: null, createdBy: null, createdDate: null,
                 lastModifiedBy: null, lastModifiedDate: null, resetDate: null,

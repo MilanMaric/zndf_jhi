@@ -1,10 +1,10 @@
 <div>
-    <h2 translate="actor.home.title">Users</h2>
+    <h2 translate="event.home.title">Users</h2>
     <jhi-alert></jhi-alert>
     <div class="row">
         <div class="col-md-4">
-            <button class="btn btn-primary" ui-sref="actors.new">
-                <span class="glyphicon glyphicon-flash"></span> <span translate="actor.home.createLabel">Create a new User</span>
+            <button class="btn btn-primary" ui-sref="events.new">
+                <span class="glyphicon glyphicon-flash"></span> <span translate="event.home.createLabel">Create a new User</span>
             </button>
         </div>
     </div>
@@ -13,36 +13,35 @@
             <thead>
                 <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
                     <th jh-sort-by="id"><span translate="global.field.id">ID</span><span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="firstName"><span translate="actor.firstName">Date of birth</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="lastName"><span translate="actor.lastName">Date of birth</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    <th jh-sort-by="bornDate"><span translate="actor.bornDate">Date of birth</span> <span class="glyphicon glyphicon-sort"></span></th>
-                    
+                    <th jh-sort-by="name"><span translate="event.name">Date of birth</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="eventTime"><span translate="event.eventTime">Date of birth</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="location"><span translate="event.location">Date of birth</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="actor in vm.actors track by actor.id">
-                    <td><a ui-sref="actors-detail({id:actor.id})">{{actor.id}}</a></td>
-                    <td>{{actor.firstName}}</td>
-                    <td>{{actor.lastName}}</td>
-                    <td>{{actor.bornDate}}</td>
+                <tr ng-repeat="event in vm.events track by event.id">
+                    <td><a ui-sref="events-detail({id:event.id})">{{event.id}}</a></td>
+                    <td>{{event.name}}</td>
+                    <td>{{event.eventTime|date:'dd.MM.yyyy HH:mm'}}</td>
+                    <td>{{event.location}}</td>
                     <td class="text-right">
                         <div class="btn-group flex-btn-group-container">
                             <button type="submit"
-                                    ui-sref="actors-detail({id:actor.id})"
+                                    ui-sref="events-detail({id:event.id})"
                                     class="btn btn-info btn-sm">
                                 <span class="glyphicon glyphicon-eye-open"></span>
                                 <span class="hidden-xs hidden-sm" translate="entity.action.view"></span>
                             </button>
                             <button type="submit"
-                                    ui-sref="actors.edit({id:actor.id})"
+                                    ui-sref="events.edit({id:event.id})"
                                     class="btn btn-primary btn-sm">
                                 <span class="glyphicon glyphicon-pencil"></span>
                                 <span class="hidden-xs hidden-sm" translate="entity.action.edit"></span>
                             </button>
                             <button type="submit"
-                                    ui-sref="actors.delete({id:actor.id})"
-                                    class="btn btn-danger btn-sm" ng-disabled="vm.currentAccount.login == actor.login">
+                                    ui-sref="events.delete({id:event.id})"
+                                    class="btn btn-danger btn-sm" ng-disabled="vm.currentAccount.login == event.login">
                                 <span class="glyphicon glyphicon-remove-circle"></span>
                                 <span class="hidden-xs hidden-sm" translate="entity.action.delete"></span>
                             </button>

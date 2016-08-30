@@ -3,17 +3,17 @@
 
     angular
             .module('zndfApp')
-            .controller('ActorsDialogController', ActorsDialogController);
+            .controller('EventsDialogController', EventsDialogController);
 
-    ActorsDialogController.$inject = ['$stateParams', '$uibModalInstance', 'entity', 'Actor', 'JhiLanguageService'];
+    EventsDialogController.$inject = ['$stateParams', '$uibModalInstance', 'entity', 'Event', 'JhiLanguageService'];
 
-    function ActorsDialogController($stateParams, $uibModalInstance, entity, Actor, JhiLanguageService) {
+    function EventsDialogController($stateParams, $uibModalInstance, entity, Event, JhiLanguageService) {
         var vm = this;
 
         vm.clear = clear;
         vm.languages = null;
         vm.save = save;
-        vm.actor = entity;
+        vm.event = entity;
 
 
         JhiLanguageService.getAll().then(function (languages) {
@@ -35,10 +35,10 @@
 
         function save() {
             vm.isSaving = true;
-            if (vm.actor.id !== null) {
-                Actor.update(vm.actor, onSaveSuccess, onSaveError);
+            if (vm.event.id !== null) {
+                Event.update(vm.event, onSaveSuccess, onSaveError);
             } else {
-                Actor.save(vm.actor, onSaveSuccess, onSaveError);
+                Event.save(vm.event, onSaveSuccess, onSaveError);
             }
         }
     }

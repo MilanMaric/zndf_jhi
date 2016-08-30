@@ -9,17 +9,17 @@
 
     function stateConfig($stateProvider) {
         $stateProvider
-                .state('actors', {
+                .state('events', {
                     parent: 'app',
-                    url: '/actors?page&sort',
+                    url: '/events?page&sort',
                     data: {
                         authorities: ['ROLE_USER'],
                         pageTitle: 'userManagement.home.title'
                     },
                     views: {
                         'content@': {
-                            templateUrl: 'app/actors/actors.html',
-                            controller: 'ActorsController',
+                            templateUrl: 'app/events/events.html',
+                            controller: 'EventsController',
                             controllerAs: 'vm'
                         }
                     }, params: {
@@ -42,42 +42,42 @@
                                 };
                             }],
                         translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
-                                $translatePartialLoader.addPart('actor');
+                                $translatePartialLoader.addPart('event');
                                 return $translate.refresh();
                             }]
 
                     }})
-                .state('actors-detail', {
+                .state('events-detail', {
                     parent: 'app',
-                    url: '/actors/:id',
+                    url: '/events/:id',
                     data: {
                         authorities: ['ROLE_USER'],
-                        pageTitle: 'actor.detail.title'
+                        pageTitle: 'event.detail.title'
                     },
                     views: {
                         'content@': {
-                            templateUrl: 'app/actors/actors-detail.html',
-                            controller: 'ActorsDetailController',
+                            templateUrl: 'app/events/events-detail.html',
+                            controller: 'EventsDetailController',
                             controllerAs: 'vm'
                         }
                     },
                     resolve: {
                         translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
-                                $translatePartialLoader.addPart('actor');
+                                $translatePartialLoader.addPart('event');
                                 return $translate.refresh();
                             }]
                     }
                 })
-                .state('actors.new', {
-                    parent: 'actors',
+                .state('events.new', {
+                    parent: 'events',
                     url: '/new',
                     data: {
                         authorities: ['ROLE_USER']
                     },
                     onEnter: ['$stateParams', '$state', '$uibModal', function ($stateParams, $state, $uibModal) {
                             $uibModal.open({
-                                templateUrl: 'app/actors/actors-dialog.html',
-                                controller: 'ActorsDialogController',
+                                templateUrl: 'app/events/events-dialog.html',
+                                controller: 'EventsDialogController',
                                 controllerAs: 'vm',
                                 backdrop: 'static',
                                 size: 'lg',
@@ -92,52 +92,52 @@
                                     }
                                 }
                             }).result.then(function () {
-                                $state.go('actors', null, {reload: true});
+                                $state.go('events', null, {reload: true});
                             }, function () {
-                                $state.go('actors');
+                                $state.go('events');
                             });
                         }]
                 })
-                .state('actors.edit', {
-                    parent: 'actors',
+                .state('events.edit', {
+                    parent: 'events',
                     url: '/{id}/edit',
                     data: {
                         authorities: ['ROLE_USER']
                     },
                     onEnter: ['$stateParams', '$state', '$uibModal', function ($stateParams, $state, $uibModal) {
                             $uibModal.open({
-                                templateUrl: 'app/actors/actors-dialog.html',
-                                controller: 'ActorsDialogController',
+                                templateUrl: 'app/events/events-dialog.html',
+                                controller: 'EventsDialogController',
                                 controllerAs: 'vm',
                                 backdrop: 'static',
                                 size: 'lg',
                                 resolve: {
-                                    entity: ['Actor', function (Actor) {
-                                            return Actor.get({id: $stateParams.id});
+                                    entity: ['Event', function (Event) {
+                                            return Event.get({id: $stateParams.id});
                                         }]
                                 }
                             }).result.then(function () {
-                                $state.go('actors', null, {reload: true});
+                                $state.go('events', null, {reload: true});
                             }, function () {
                                 $state.go('^');
                             });
                         }]
                 })
-                .state('actors.delete', {
-                    parent: 'actors',
+                .state('events.delete', {
+                    parent: 'events',
                     url: '/{id}/delete',
                     data: {
                         authorities: ['ROLE_USER']
                     },
                     onEnter: ['$stateParams', '$state', '$uibModal', function ($stateParams, $state, $uibModal) {
                             $uibModal.open({
-                                templateUrl: 'app/actors/actors-delete-dialog-controller.js',
-                                controller: 'ActorsDeleteController',
+                                templateUrl: 'app/events/events-delete-dialog-controller.js',
+                                controller: 'EventsDeleteController',
                                 controllerAs: 'vm',
                                 size: 'md',
                                 resolve: {
-                                    entity: ['Actor', function (Actor) {
-                                            return Actor.get({id: $stateParams.id});
+                                    entity: ['Event', function (Event) {
+                                            return Event.get({id: $stateParams.id});
                                         }]
                                 }
                             }).result.then(function () {

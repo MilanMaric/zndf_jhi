@@ -5,9 +5,9 @@
             .module('zndfApp')
             .controller('FilmsDialogController', FilmsDialogController);
 
-    FilmsDialogController.$inject = ['$stateParams', 'entity', 'Film', 'JhiLanguageService', 'Genre', 'Actor'];
+    FilmsDialogController.$inject = ['$stateParams', 'entity', 'Film', 'JhiLanguageService', 'Genre', 'Actor','$state'];
 
-    function FilmsDialogController($stateParams, entity, Film, JhiLanguageService, Genre, Actor) {
+    function FilmsDialogController($stateParams, entity, Film, JhiLanguageService, Genre, Actor,$state) {
         var vm = this;
         vm.actors = [];
         vm.languages = null;
@@ -39,7 +39,7 @@
 
         function onSaveSuccess(result) {
             vm.isSaving = false;
-
+            $state.go('films');
         }
 
         function onSaveError() {
