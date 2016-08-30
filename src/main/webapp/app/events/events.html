@@ -41,7 +41,7 @@
                             </button>
                             <button type="submit"
                                     ui-sref="events.delete({id:event.id})"
-                                    class="btn btn-danger btn-sm" ng-disabled="vm.currentAccount.login == event.login">
+                                    class="btn btn-danger btn-sm" has-authority='ROLE_ADMIN'>
                                 <span class="glyphicon glyphicon-remove-circle"></span>
                                 <span class="hidden-xs hidden-sm" translate="entity.action.delete"></span>
                             </button>

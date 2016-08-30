@@ -51,7 +51,7 @@
                     parent: 'app',
                     url: '/events/:id',
                     data: {
-                        authorities: ['ROLE_USER'],
+                        authorities: ['ROLE_ADMIN'],
                         pageTitle: 'event.detail.title'
                     },
                     views: {
@@ -84,10 +84,7 @@
                                 resolve: {
                                     entity: function () {
                                         return {
-                                            id: null, login: null, firstName: null, lastName: null, email: null,
-                                            activated: true, langKey: null, createdBy: null, createdDate: null,
-                                            lastModifiedBy: null, lastModifiedDate: null, resetDate: null,
-                                            resetKey: null, authorities: null
+                                            id:null
                                         };
                                     }
                                 }
@@ -131,7 +128,7 @@
                     },
                     onEnter: ['$stateParams', '$state', '$uibModal', function ($stateParams, $state, $uibModal) {
                             $uibModal.open({
-                                templateUrl: 'app/events/events-delete-dialog-controller.js',
+                                templateUrl: 'app/events/events-delete-dialog.html',
                                 controller: 'EventsDeleteController',
                                 controllerAs: 'vm',
                                 size: 'md',

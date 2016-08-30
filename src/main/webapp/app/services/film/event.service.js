@@ -11,7 +11,7 @@
         var service = $resource('api/events/:id', {}, {
             'query': {method: 'GET', isArray: true},
             'save': { method:'POST' },
-            'update': { method:'PUT' }
+            'send': { method:'PUT' }
         });
 
         return service;

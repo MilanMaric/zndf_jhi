@@ -35,6 +35,15 @@
 
         function save() {
             vm.isSaving = true;
+            var k=vm.event.time.time.split(":");
+            var timeMillis=0;
+            if(k.length==2){
+                timeMillis=(k[0]*60+k[1])*60*1000;
+            }
+            var dateTimeMilis=vm.event.time.date.getTime()+timeMillis;
+            var dateTimeObject=new Date(dateTimeMilis);
+            vm.event.eventDate=dateTimeObject.toISOString();
+            vm.event.time=undefined;
             if (vm.event.id !== null) {
                 Event.update(vm.event, onSaveSuccess, onSaveError);
             } else {

@@ -131,7 +131,7 @@
                     },
                     onEnter: ['$stateParams', '$state', '$uibModal', function ($stateParams, $state, $uibModal) {
                             $uibModal.open({
-                                templateUrl: 'app/actors/actors-delete-dialog-controller.js',
+                                templateUrl: 'app/actors/actors-delete-dialog.html',
                                 controller: 'ActorsDeleteController',
                                 controllerAs: 'vm',
                                 size: 'md',

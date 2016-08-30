@@ -9,9 +9,6 @@
 
     function EventsController(Principal, Event, ParseLinks, AlertService, $state, pagingParams, paginationConstants, JhiLanguageService) {
         var vm = this;
-
-        vm.authorities = ['ROLE_USER', 'ROLE_ADMIN'];
-        vm.currentAccount = null;
         vm.languages = null;
         vm.loadAll = loadAll;
         vm.setActive = setActive;
@@ -25,15 +22,11 @@
         vm.reverse = pagingParams.ascending;
         vm.itemsPerPage = paginationConstants.itemsPerPage;
         vm.transition = transition;
+        
+        vm.sendEvent=sendEvent;
 
         vm.loadAll();
         
-        JhiLanguageService.getAll().then(function (languages) {
-            vm.languages = languages;
-        });
-        Principal.identity().then(function(account) {
-            vm.currentAccount = account;
-        });
 
         function setActive (event, isActivated) {
             event.activated = isActivated;
@@ -95,8 +88,12 @@
             $state.transitionTo($state.$current, {
                 page: vm.page,
                 sort: vm.predicate + ',' + (vm.reverse ? 'asc' : 'desc'),
-                search: vm.currentSearch
+                search: vm.e
             });
+        }
+        
+        function sendEvent(event){
+            Event.send({id:event.id});
         }
     }
 })();

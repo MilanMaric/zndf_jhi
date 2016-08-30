@@ -17,6 +17,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Size;
 import org.hibernate.annotations.Where;
 
 /**
@@ -42,9 +43,11 @@ public class Actor extends AbstractAuditingEntity implements Serializable {
     }
 
     @Column(name = "first_name", nullable = false)
+    @Size(min = 1, max = 255)
     String firstName;
 
     @Column(name = "last_name", nullable = false)
+    @Size(min = 1, max = 255)
     String lastName;
 
     @Column(name = "born_date", nullable = true)

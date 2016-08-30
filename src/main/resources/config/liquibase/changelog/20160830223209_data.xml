@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+    <changeSet author="milan (generated)" id="1472596341474-1">
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/films.csv"
+                  separator=","
+                  tableName="jhi_film"/>
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/actors.csv"
+                  separator=","
+                  tableName="jhi_actor"/>
+        <loadData encoding="UTF-8"
+                         file="config/liquibase/genre.csv"
+                         separator=","
+                         tableName="jhi_genre"/>
+        <loadData encoding="UTF-8"
+                         file="config/liquibase/film_genres.csv"
+                         separator=","
+                         tableName="jhi_film_genres"/>
+        <loadData encoding="UTF-8"
+                         file="config/liquibase/actor_roles.csv"
+                         separator=","
+                         tableName="jhi_actor_roles"/>
+    </changeSet>
+</databaseChangeLog>

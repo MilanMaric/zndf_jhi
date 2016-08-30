@@ -14,6 +14,7 @@ import javax.validation.Valid;
 import net.etfbl.ip.zndf.domain.Event;
 import net.etfbl.ip.zndf.repository.EventRepository;
 import net.etfbl.ip.zndf.repository.UserRepository;
+import net.etfbl.ip.zndf.security.AuthoritiesConstants;
 import net.etfbl.ip.zndf.service.MailService;
 import net.etfbl.ip.zndf.web.rest.util.HeaderUtil;
 import net.etfbl.ip.zndf.web.rest.util.PaginationUtil;
@@ -25,6 +26,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -54,7 +56,7 @@ public class EventResource {
             method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-//    @Secured(AuthoritiesConstants.SUPERUSER)
+    @Secured(AuthoritiesConstants.SUPERUSER)
     public ResponseEntity<Event> saveEvent(@RequestBody @Valid Event event) throws URISyntaxException {
         event.setSent(false);
         Event newEvent = eventRepository.save(event);
@@ -82,15 +84,19 @@ public class EventResource {
 
     @RequestMapping(method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE, path = "/{id}/send")
     @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<Event> sendEvent(@PathVariable Long id) throws URISyntaxException {
         Event event = eventRepository.findOne(id);
-        event.setSent(true);
-        userRepository.findAll().stream().forEach(user -> {
-            log.debug("hsidhsaihdiusahdosa");
-            mailService.sendNotificationEmail(user, event);
-        });
-        eventRepository.save(event);
-        return ResponseEntity.ok().body(event);
+        if (event != null && !(event.getSent())) {
+            event.setSent(true);
+            userRepository.findAll().stream().forEach(user -> {
+                log.debug("hsidhsaihdiusahdosa");
+                mailService.sendNotificationEmail(user, event);
+            });
+            eventRepository.save(event);
+            return ResponseEntity.ok().body(event);
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
 }

@@ -22,9 +22,9 @@ spring:
     datasource:
         type: com.zaxxer.hikari.HikariDataSource
         url: jdbc:mysql://localhost:3306/zndf?useUnicode=true&characterEncoding=utf8&useSSL=false
-        name: 
-        username: root
-        password: rockandroll1
+        name: zndf
+        username: zndf
+        password: zndf
         hikari:
             data-source-properties:
                 cachePrepStmts: true

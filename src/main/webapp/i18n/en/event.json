@@ -7,13 +7,15 @@
         },
         "created": "A new event is created with identifier {{ param }}",
         "updated": "An event is updated with identifier {{ param }}",
-        "deleted": "An event is deleted with identifier {{ param }}",
+        "deleted": "An event is sent with identifier {{ param }}",
         "delete": {
-            "question": "Are you sure you want to delete event {{ login }}?"
+            "title":"s",
+            "question": "Are you sure you want to send email notifications for event {{ login }}?"
         },
         "detail": {
             "title": "Event"
         },
+        "id":"Id",
         "location": "Location",
         "name": "Name",
         "eventTime": "Time of the event",
