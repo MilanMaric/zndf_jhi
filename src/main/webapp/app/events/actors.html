@@ -1,0 +1,59 @@
+<div>
+    <h2 translate="actor.home.title">Users</h2>
+    <jhi-alert></jhi-alert>
+    <div class="row">
+        <div class="col-md-4">
+            <button class="btn btn-primary" ui-sref="actors.new">
+                <span class="glyphicon glyphicon-flash"></span> <span translate="actor.home.createLabel">Create a new User</span>
+            </button>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr jh-sort="vm.predicate" ascending="vm.reverse" callback="vm.transition()">
+                    <th jh-sort-by="id"><span translate="global.field.id">ID</span><span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="firstName"><span translate="actor.firstName">Date of birth</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="lastName"><span translate="actor.lastName">Date of birth</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    <th jh-sort-by="bornDate"><span translate="actor.bornDate">Date of birth</span> <span class="glyphicon glyphicon-sort"></span></th>
+                    
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr ng-repeat="actor in vm.actors track by actor.id">
+                    <td><a ui-sref="actors-detail({id:actor.id})">{{actor.id}}</a></td>
+                    <td>{{actor.firstName}}</td>
+                    <td>{{actor.lastName}}</td>
+                    <td>{{actor.bornDate}}</td>
+                    <td class="text-right">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    ui-sref="actors-detail({id:actor.id})"
+                                    class="btn btn-info btn-sm">
+                                <span class="glyphicon glyphicon-eye-open"></span>
+                                <span class="hidden-xs hidden-sm" translate="entity.action.view"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="actors.edit({id:actor.id})"
+                                    class="btn btn-primary btn-sm">
+                                <span class="glyphicon glyphicon-pencil"></span>
+                                <span class="hidden-xs hidden-sm" translate="entity.action.edit"></span>
+                            </button>
+                            <button type="submit"
+                                    ui-sref="actors.delete({id:actor.id})"
+                                    class="btn btn-danger btn-sm" ng-disabled="vm.currentAccount.login == actor.login">
+                                <span class="glyphicon glyphicon-remove-circle"></span>
+                                <span class="hidden-xs hidden-sm" translate="entity.action.delete"></span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="text-center">
+        <jhi-item-count page="vm.page" total="vm.queryCount" items-per-page="vm.itemsPerPage"></jhi-item-count>
+        <uib-pagination class="pagination-sm" total-items="vm.totalItems" ng-model="vm.page" ng-change="vm.transition()"></uib-pagination>
+    </div>
+</div>

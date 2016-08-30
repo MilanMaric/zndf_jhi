@@ -19,6 +19,7 @@ import javax.validation.Valid;
 import net.etfbl.ip.zndf.domain.Comment;
 import net.etfbl.ip.zndf.domain.Film;
 import net.etfbl.ip.zndf.domain.FilmRate;
+import net.etfbl.ip.zndf.domain.Genre;
 import net.etfbl.ip.zndf.domain.RateId;
 import net.etfbl.ip.zndf.domain.Trailer;
 import net.etfbl.ip.zndf.domain.User;
@@ -26,6 +27,7 @@ import net.etfbl.ip.zndf.repository.ActorRolesRepository;
 import net.etfbl.ip.zndf.repository.CommentsRepository;
 import net.etfbl.ip.zndf.repository.FilmRatesRepository;
 import net.etfbl.ip.zndf.repository.FilmRepository;
+import net.etfbl.ip.zndf.repository.GenreRepository;
 import net.etfbl.ip.zndf.repository.TrailerRepository;
 import net.etfbl.ip.zndf.repository.UserRepository;
 import net.etfbl.ip.zndf.security.AuthoritiesConstants;
@@ -89,15 +91,27 @@ public class FilmResource {
     @Inject
     private FileService fileService;
 
+    @Inject
+    private GenreRepository genreRepository;
+
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<List<FilmVM>> getAll(Pageable pageable, @RequestParam(name = "s", required = false) String search) throws URISyntaxException {
+    public ResponseEntity<List<FilmVM>> getAll(Pageable pageable, @RequestParam(name = "s", required = false) String search, @RequestParam(name = "g", required = false) Long genreId) throws URISyntaxException {
         Page<Film> page;
-        if (search == null || search.isEmpty()) {
-            page = filmRepository.findAll(pageable);
-        } else {
-            page = filmRepository.findAllByTitleContaining(search, pageable);
+        if (search == null) {
+            search = "";
         }
+        if (genreId == null) {
+            page = filmRepository.findAllByTitleContaining(search, pageable);
+        } else {
+            Genre genre = genreRepository.findOne(genreId);
+            if (genre != null) {
+                page = filmRepository.findAllByTitleContainingAndGenres(search, genre, pageable);
+            } else {
+                return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            }
+        }
+        log.debug("Searching for film with tile {} and genreId {} ", search, genreId);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/films");
         List<FilmVM> list = page.getContent().stream().map(FilmVM::new).collect(Collectors.toList());
         return new ResponseEntity<>(list, headers, HttpStatus.OK);

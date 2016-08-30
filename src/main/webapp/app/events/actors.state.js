@@ -9,17 +9,17 @@
 
     function stateConfig($stateProvider) {
         $stateProvider
-                .state('gallery', {
+                .state('actors', {
                     parent: 'app',
-                    url: '/gallery?page&sort',
+                    url: '/actors?page&sort',
                     data: {
                         authorities: ['ROLE_USER'],
                         pageTitle: 'userManagement.home.title'
                     },
                     views: {
                         'content@': {
-                            templateUrl: 'app/gallery/gallery.html',
-                            controller: 'GalleryController',
+                            templateUrl: 'app/actors/actors.html',
+                            controller: 'ActorsController',
                             controllerAs: 'vm'
                         }
                     }, params: {
@@ -42,21 +42,42 @@
                                 };
                             }],
                         translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
-                                $translatePartialLoader.addPart('gallery');
+                                $translatePartialLoader.addPart('actor');
                                 return $translate.refresh();
                             }]
 
                     }})
-                .state('gallery.new', {
-                    parent: 'gallery',
+                .state('actors-detail', {
+                    parent: 'app',
+                    url: '/actors/:id',
+                    data: {
+                        authorities: ['ROLE_USER'],
+                        pageTitle: 'actor.detail.title'
+                    },
+                    views: {
+                        'content@': {
+                            templateUrl: 'app/actors/actors-detail.html',
+                            controller: 'ActorsDetailController',
+                            controllerAs: 'vm'
+                        }
+                    },
+                    resolve: {
+                        translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
+                                $translatePartialLoader.addPart('actor');
+                                return $translate.refresh();
+                            }]
+                    }
+                })
+                .state('actors.new', {
+                    parent: 'actors',
                     url: '/new',
                     data: {
-                        authorities: ['ROLE_ADMIN']
+                        authorities: ['ROLE_USER']
                     },
                     onEnter: ['$stateParams', '$state', '$uibModal', function ($stateParams, $state, $uibModal) {
                             $uibModal.open({
-                                templateUrl: 'app/gallery/gallery-dialog.html',
-                                controller: 'GalleryDialogController',
+                                templateUrl: 'app/actors/actors-dialog.html',
+                                controller: 'ActorsDialogController',
                                 controllerAs: 'vm',
                                 backdrop: 'static',
                                 size: 'lg',
@@ -71,28 +92,52 @@
                                     }
                                 }
                             }).result.then(function () {
-                                $state.go('gallery', null, {reload: true});
+                                $state.go('actors', null, {reload: true});
                             }, function () {
-                                $state.go('gallery');
+                                $state.go('actors');
                             });
                         }]
                 })
-
-                .state('gallery.delete', {
-                    parent: 'gallery',
-                    url: '/{id}/delete',
+                .state('actors.edit', {
+                    parent: 'actors',
+                    url: '/{id}/edit',
                     data: {
-                        authorities: ['R']
+                        authorities: ['ROLE_USER']
                     },
                     onEnter: ['$stateParams', '$state', '$uibModal', function ($stateParams, $state, $uibModal) {
                             $uibModal.open({
-                                templateUrl: 'app/gallery/gallery-delete-dialog.html',
-                                controller: 'GalleryDeleteController',
+                                templateUrl: 'app/actors/actors-dialog.html',
+                                controller: 'ActorsDialogController',
+                                controllerAs: 'vm',
+                                backdrop: 'static',
+                                size: 'lg',
+                                resolve: {
+                                    entity: ['Actor', function (Actor) {
+                                            return Actor.get({id: $stateParams.id});
+                                        }]
+                                }
+                            }).result.then(function () {
+                                $state.go('actors', null, {reload: true});
+                            }, function () {
+                                $state.go('^');
+                            });
+                        }]
+                })
+                .state('actors.delete', {
+                    parent: 'actors',
+                    url: '/{id}/delete',
+                    data: {
+                        authorities: ['ROLE_USER']
+                    },
+                    onEnter: ['$stateParams', '$state', '$uibModal', function ($stateParams, $state, $uibModal) {
+                            $uibModal.open({
+                                templateUrl: 'app/actors/actors-delete-dialog-controller.js',
+                                controller: 'ActorsDeleteController',
                                 controllerAs: 'vm',
                                 size: 'md',
                                 resolve: {
-                                    entity: ['Gallery', function (Gallery) {
-                                            return Gallery.get({id: $stateParams.id});
+                                    entity: ['Actor', function (Actor) {
+                                            return Actor.get({id: $stateParams.id});
                                         }]
                                 }
                             }).result.then(function () {
@@ -101,26 +146,6 @@
                                 $state.go('^');
                             });
                         }]
-                })
-                .state('gallery.detail', {
-                    parent: 'gallery',
-                    url: '/{id}',
-                    data: {
-                        authorities: ['ROLE_USER']
-                    },
-                    onEnter: ['$stateParams', '$state', '$uibModal', function ($stateParams, $state, $uibModal) {
-                            $uibModal.open({
-                                templateUrl: 'app/gallery/gallery-detail-dialog.html',
-                                controller: 'GalleryDetailDialogController',
-                                controllerAs: 'vm',
-                                size: 'lg'
-                            }).result.then(function () {
-                                $state.go('user-management', null, {reload: true});
-                            }, function () {
-                                $state.go('^');
-                            });
-                        }]
                 });
-        ;
     }
 })();

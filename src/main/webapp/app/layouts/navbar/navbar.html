@@ -22,9 +22,7 @@
                 </li>
                 <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
 
-                <li ng-class="{
-                            active:vm.$state.includes('account')
-                        }" uib-dropdown dropdown>
+                <li ng-class="{active:vm.$state.includes('account')}" uib-dropdown dropdown>
                     <a class="dropdown-toggle" uib-dropdown-toggle href="" id="account-menu">
                         <span>
                             <span class="glyphicon glyphicon-user"></span>
@@ -136,13 +134,12 @@
                                 <span translate="global.menu.admin.logs">Logs</span>
                             </a>
                         </li>
-                        <li ng-show="vm.swaggerEnabled" ui-sref-active="active">
+                        <li  ui-sref-active="active">
                             <a ui-sref="docs" ng-click="vm.collapseNavbar()">
                                 <span class="glyphicon glyphicon-book"></span>&nbsp;
                                 <span translate="global.menu.admin.apidocs">API</span>
                             </a>
                         </li>
-                        <!-- jhipster-needle-add-element-to-admin-menu - JHipster will add entities to the admin menu here -->
                     </ul>
                 </li>
                 <li ui-sref-active="active" uib-dropdown dropdown ng-controller="JhiLanguageController as languageVm">

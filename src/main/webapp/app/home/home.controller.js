@@ -14,7 +14,7 @@
         vm.isAuthenticated = null;
         vm.login = LoginService.open;
         vm.feedsPage = 1;
-        vm.itemsPerPage = 5;
+        vm.itemsPerPage = 2;
         vm.films = [];
         vm.feed = {};
         vm.register = register;
@@ -25,11 +25,12 @@
         });
         vm.onSearchChange = onSearchChange;
         vm.getFeeds = getFeeds;
+        vm.loadNextPage = loadNextPage;
         vm.getFeeds(0);
-        vm.transition = transition;
         getAccount();
-        getFilms();
+        vm.getFilms = getFilms;
         getFavorites();
+        getFilms();
 
         function getAccount() {
             Principal.identity().then(function (account) {
@@ -47,9 +48,14 @@
         }
 
         function getFilms() {
+            vm.page = 0;
+            vm.more = false;
             Film.query({
                 page: vm.page,
-                size: vm.itemsPerPage
+                size: vm.itemsPerPage,
+                s: vm.mSearch,
+                g: vm.mGenre,
+                sort: "rate,desc"
             }, onSuccess, onError);
         }
 
@@ -58,6 +64,7 @@
             vm.totalItems = headers('X-Total-Count');
             vm.queryCount = vm.totalItems;
             vm.films = data;
+            vm.more = true;
         }
 
         function onError(error) {
@@ -65,9 +72,6 @@
         }
 
 
-        function transition() {
-            vm.page = vm.page++;
-        }
 
         function getFeeds() {
             var feed = new google.feeds.Feed("http://dvd.netflix.com/Top100RSS");
@@ -81,12 +85,39 @@
             });
 
         }
-
+//for OMDB api
         function onSearchChange() {
             vm.searchResults = OMDB.get({
                 s: vm.search,
                 page: 1
             });
+        }
+
+        function loadNextPage() {
+            vm.page++;
+            vm.more = false;
+            Film.query({
+                page: vm.page,
+                size: vm.itemsPerPage,
+                s: vm.mSearch,
+                g: vm.mGenre,
+                sort: "rate,desc"
+            }, nextPageSuccess, nextPageError);
+        }
+
+        function nextPageSuccess(data) {
+            if (data && data.length > 0) {
+                if (vm.films)
+                    vm.films = vm.films.concat(data);
+                else
+                    vm.films = data;
+                vm.more = true;
+            }
+        }
+
+        function nextPageError() {
+            vm.more = false;
+            vm.page--;
         }
 
         function getFavorites() {
