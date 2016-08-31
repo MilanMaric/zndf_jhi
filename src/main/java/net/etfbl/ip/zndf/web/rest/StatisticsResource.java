@@ -15,6 +15,7 @@ import net.etfbl.ip.zndf.security.AuthoritiesConstants;
 import net.etfbl.ip.zndf.web.rest.vm.FilmVM;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,6 +40,9 @@ public class StatisticsResource {
     @Timed
     public ResponseEntity<List<FilmVM>> getByFovorable(Pageable pageable) {
         List<Film> list = filmRepository.findTopByFavorites(pageable.getPageSize(), pageable.getOffset());
+        if (list.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
         return ResponseEntity.ok().body(list.stream().map(FilmVM::new).collect(Collectors.toList()));
     }
 

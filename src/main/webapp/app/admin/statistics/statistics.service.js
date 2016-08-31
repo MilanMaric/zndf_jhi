@@ -7,7 +7,7 @@
 
     StatisticsService.$inject = ['$resource'];
 
-    function Actor($resource) {
+    function StatisticsService($resource) {
         var service = $resource('api/statistics/', {}, {
             'byRate': {method: 'GET', isArray: true, url: '/api/statistics/films/favorites'},
             'byPopularity': {

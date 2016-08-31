@@ -32,6 +32,10 @@
             }
         }
 
+        function onError() {
+            vm.page = 0;
+        }
+
         function onSuccess(data, headers) {
             vm.totalItems = headers('X-Total-Count');
             vm.queryCount = vm.totalItems;

@@ -51,7 +51,7 @@
                     parent: 'app',
                     url: '/events/:id',
                     data: {
-                        authorities: ['ROLE_ADMIN'],
+                        authorities: ['ROLE_USER'],
                         pageTitle: 'event.detail.title'
                     },
                     views: {
