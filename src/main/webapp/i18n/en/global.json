@@ -25,6 +25,7 @@
                 "metrics": "Metrics",
                 "health": "Health",
                 "genres":"Genres",
+                "statistics":"Statistics",
                 "configuration": "Configuration",
                 "logs": "Logs",
                 "audits": "Audits",

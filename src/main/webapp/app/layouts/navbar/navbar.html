@@ -28,7 +28,7 @@
                         Films
                     </a>
                 </li>
-                 <li ng-class="{
+                <li ng-class="{
                             active: vm.$state.includes('events')
                         }" ng-switch-when="true">
                     <a ui-sref="events">
@@ -37,7 +37,7 @@
                     </a>
                 </li>
                 <li ng-class="{
-                            active: vm.$state.includes('gallery')
+                            active:vm.$state.includes('gallery')
                         }" ng-switch-when="true">
                     <a ui-sref="gallery">
                         <span class="glyphicon glyphicon-film"></span>&nbsp;
@@ -53,7 +53,7 @@
                     </a>
                 </li>
                 <li ng-class="{
-                            active: vm.$state.includes('account')}" uib-dropdown dropdown>
+                            active:vm.$state.includes('account')}" uib-dropdown dropdown>
                     <a class="dropdown-toggle" uib-dropdown-toggle href="" id="account-menu">
                         <span>
                             <span class="glyphicon glyphicon-user"></span>
@@ -112,12 +112,6 @@
                         </span>
                     </a>
                     <ul class="dropdown-menu" uib-dropdown-menu>
-                        <li ui-sref-active="active" ng-switch-when="true">
-                            <a ui-sref="genres" ng-click="vm.collapseNavbar()">
-                                <span class="glyphicon glyphicon-tags"></span>&nbsp;
-                                <span translate="global.menu.admin.genres">Genres</span>
-                            </a>
-                        </li>
                         <li ui-sref-active="active">
                             <a ui-sref="user-management" ng-click="vm.collapseNavbar()">
                                 <span class="glyphicon glyphicon-user"></span>&nbsp;
@@ -140,6 +134,12 @@
                             <a ui-sref="genres" ng-click="vm.collapseNavbar()">
                                 <span class="glyphicon glyphicon-tags"></span>&nbsp;
                                 <span translate="global.menu.admin.genres">Genres</span>
+                            </a>
+                        </li>
+                        <li ui-sref-active="active">
+                            <a ui-sref="jhi-statistics" ng-click="vm.collapseNavbar()">
+                                <span class="glyphicon glyphicon-stats"></span>&nbsp;
+                                <span translate="global.menu.admin.statistics">Statistics</span>
                             </a>
                         </li>
                         <li ui-sref-active="active">
