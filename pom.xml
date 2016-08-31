@@ -422,6 +422,7 @@
             </plugins>
         </pluginManagement>
         <plugins>
+            
             <plugin>
                 <groupId>com.github.ekryd.sortpom</groupId>
                 <artifactId>sortpom-maven-plugin</artifactId>
@@ -652,7 +653,7 @@
                     -->
                 </configuration>
             </plugin>
-<!--            <plugin>
+            <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>jaxb2-maven-plugin</artifactId>
                 <version>1.6</version>
@@ -665,11 +666,11 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <schemaDirectory>${project.basedir}/src/main/resources/soap</schemaDirectory>
+                    <schemaDirectory>${project.basedir}/src/main/resources/</schemaDirectory>
                     <outputDirectory>${project.basedir}/src/main/java</outputDirectory>
                     <clearOutputDir>false</clearOutputDir>
                 </configuration>
-            </plugin>-->
+            </plugin>
             <!-- jhipster-needle-maven-add-plugin -->
         </plugins>
     </build>
@@ -700,6 +701,24 @@
                         <configuration>
                             <warSourceDirectory>src/main/webapp/</warSourceDirectory>
                             <packagingExcludes>WEB-INF/lib/tomcat-*.jar</packagingExcludes>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.codehaus.mojo</groupId>
+                        <artifactId>jaxb2-maven-plugin</artifactId>
+                        <version>1.6</version>
+                        <executions>
+                            <execution>
+                                <id>xjc</id>
+                                <goals>
+                                    <goal>xjc</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <schemaDirectory>${project.basedir}/src/main/resources/</schemaDirectory>
+                            <outputDirectory>${project.basedir}/src/main/java</outputDirectory>
+                            <clearOutputDir>false</clearOutputDir>
                         </configuration>
                     </plugin>
                 </plugins>

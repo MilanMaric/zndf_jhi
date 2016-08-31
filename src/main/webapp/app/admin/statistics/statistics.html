@@ -1,0 +1,37 @@
+<div class="well">
+    <h2 translate="statistics.title">Configuration</h2>
+    <h1>Films</h1>
+    <button class="btn btn-primary" ng-click='vm.getFilms(1)'>By rate</button>
+    <button class="btn btn-primary" ng-click='vm.getFilms(2)'>By favorites</button>
+    
+    <div class="list-group">
+        <div class="list-group-item" ng-repeat="film in vm.films">
+            <div class="row-action-primary">
+                <i class="material-icons">{{film.title.charAt(0)}}</i>
+            </div>
+            <div class="row-content">
+                <div class="least-content"><span class="badge">{{film.rating}}</span></div>
+                <h4 class="list-group-item-heading">{{film.title}}</h4>
+                <p class="list-group-item-text">
+                    {{film.description}}
+                </p>
+                <p></p>
+                <p class="list-group-item-text">
+                    Release date: {{film.releaseDate}}, Duration {{film.duration}}
+                </p>
+                <div ng-switch="vm.isAuthenticated()">
+                    <div ng-switch-when="true">
+                        <a ui-sref="films-detail({id:film.id})">More details</a>
+                    </div>
+
+                    <div ng-switch-when="false">
+                        Log in to see more details
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class='btn btn-primary btn-block' ng-show='vm.more' ng-click='vm.loadNextPage()'>Load more...</button>
+    </div>
+</div>
+
+
