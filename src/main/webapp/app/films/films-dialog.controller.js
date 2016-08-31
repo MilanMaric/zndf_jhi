@@ -5,9 +5,9 @@
             .module('zndfApp')
             .controller('FilmsDialogController', FilmsDialogController);
 
-    FilmsDialogController.$inject = ['$stateParams', 'entity', 'Film', 'JhiLanguageService', 'Genre', 'Actor','$state'];
+    FilmsDialogController.$inject = ['$stateParams', 'entity', 'Film', 'JhiLanguageService', 'Genre', 'Actor', '$state', '$uibModal'];
 
-    function FilmsDialogController($stateParams, entity, Film, JhiLanguageService, Genre, Actor,$state) {
+    function FilmsDialogController($stateParams, entity, Film, JhiLanguageService, Genre, Actor, $state, $uibModal) {
         var vm = this;
         vm.actors = [];
         vm.languages = null;
@@ -16,6 +16,7 @@
         vm.addActor = addActor;
         vm.removeActorRole = removeActorRole;
         loadActors();
+        vm.createActor=createActor;
 
         JhiLanguageService.getAll().then(function (languages) {
             vm.languages = languages;
@@ -58,6 +59,27 @@
 
         function loadGenres() {
             vm.genres = Genre.query();
+        }
+
+        function createActor() {
+            $uibModal.open({
+                templateUrl: 'app/actors/actors-dialog.html',
+                controller: 'ActorsDialogController',
+                controllerAs: 'vm',
+                backdrop: 'static',
+                size: 'lg',
+                resolve: {
+                    entity: function () {
+                        return {
+                            id: null
+                        };
+                    }
+                }
+            }).result.then(function () {
+                loadActors();
+            }, function () {
+                
+            });
         }
 
 

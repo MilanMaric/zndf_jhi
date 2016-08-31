@@ -84,7 +84,7 @@
                                 resolve: {
                                     entity: function () {
                                         return {
-                                            id:null
+                                            id: null
                                         };
                                     }
                                 }
@@ -110,7 +110,11 @@
                                 size: 'lg',
                                 resolve: {
                                     entity: ['Event', function (Event) {
-                                            return Event.get({id: $stateParams.id});
+                                            if ($stateParams.id != 'new') {
+                                                return Event.get({id: $stateParams.id});
+                                            } else {
+                                                return null;
+                                            }
                                         }]
                                 }
                             }).result.then(function () {
@@ -138,7 +142,7 @@
                                         }]
                                 }
                             }).result.then(function () {
-                                $state.go('user-management', null, {reload: true});
+                                $state.go('events', null, {reload: true});
                             }, function () {
                                 $state.go('^');
                             });

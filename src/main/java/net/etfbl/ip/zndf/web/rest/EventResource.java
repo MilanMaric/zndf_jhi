@@ -63,6 +63,17 @@ public class EventResource {
         return ResponseEntity.created(new URI("/api/events/" + newEvent.getId())).headers(HeaderUtil.createEntityCreationAlert("event", newEvent.getId().toString())).body(newEvent);
     }
 
+    @RequestMapping(
+            method = RequestMethod.PUT,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    @Secured(AuthoritiesConstants.SUPERUSER)
+    public ResponseEntity<Event> updateEvent(@RequestBody @Valid Event event) throws URISyntaxException {
+        event.setSent(false);
+        Event newEvent = eventRepository.save(event);
+        return ResponseEntity.created(new URI("/api/events/" + newEvent.getId())).headers(HeaderUtil.createEntityCreationAlert("event", newEvent.getId().toString())).body(newEvent);
+    }
+
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     public ResponseEntity<List<Event>> getEvents(Pageable pageable) throws URISyntaxException {

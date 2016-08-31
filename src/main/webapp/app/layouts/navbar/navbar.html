@@ -20,9 +20,26 @@
                         <span class="hidden-sm" translate="global.menu.home">Home</span>
                     </a>
                 </li>
-                <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
-
-                <li ng-class="{active:vm.$state.includes('account')}" uib-dropdown dropdown>
+        
+                <li ng-class="{active: vm.$state.includes('films')}" ng-switch-when="true">
+                    <a ui-sref="films">
+                        <span class="glyphicon glyphicon-film"></span>&nbsp;
+                        Films
+                    </a>
+                </li>
+                <li ng-class="{active: vm.$state.includes('gallery')}" ng-switch-when="true">
+                    <a ui-sref="gallery">
+                        <span class="glyphicon glyphicon-film"></span>&nbsp;
+                        Gallery
+                    </a>
+                </li>
+                <li ng-class="{active: vm.$state.includes('actors')}" ng-switch-when="true">
+                    <a ui-sref="actors">
+                        <span class="glyphicon glyphicon-user"></span>&nbsp;
+                        Actors
+                    </a>
+                </li>
+                <li ng-class="{active: vm.$state.includes('account')}" uib-dropdown dropdown>
                     <a class="dropdown-toggle" uib-dropdown-toggle href="" id="account-menu">
                         <span>
                             <span class="glyphicon glyphicon-user"></span>
@@ -71,25 +88,7 @@
                         </li>
                     </ul>
                 </li>
-                <li ng-class="{active: vm.$state.includes('films')}" ng-switch-when="true">
-                    <a ui-sref="films">
-                        <span class="glyphicon glyphicon-film"></span>&nbsp;
-                        Films
-                    </a>
-                </li>
-                <li ng-class="{active: vm.$state.includes('gallery')}" ng-switch-when="true">
-                    <a ui-sref="gallery">
-                        <span class="glyphicon glyphicon-film"></span>&nbsp;
-                        Gallery
-                    </a>
-                </li>
-                <li ng-class="{active: vm.$state.includes('actors')}" ng-switch-when="true">
-                    <a ui-sref="actors">
-                        <span class="glyphicon glyphicon-user"></span>&nbsp;
-                        Actors
-                    </a>
-                </li>
-                <li ng-class="{active: vm.$state.includes('admin')}"  ng-switch-when="true" has-authority="ROLE_ADMIN" uib-drophasdown dropdown>
+                <li ng-class="{active: vm.$state.includes('admin')}"  ng-switch-when="true" has-authority="ROLE_ADMIN" uib-dropdown dropdown>
                     <a class="dropdown-toggle" uib-dropdown-toggle href="" id="admin-menu">
                         <span>
                             <span class="glyphicon glyphicon-tower"></span>
@@ -111,9 +110,9 @@
                             </a>
                         </li>
                         <li ui-sref-active="active">
-                            <a ui-sref="genres" ng-click="vm.collapseNavbar()">
-                                <span class="glyphicon glyphicon-tags"></span>&nbsp;
-                                <span translate="global.menu.admin.genres">Genres</span>
+                            <a ui-sref="jhi-health" ng-click="vm.collapseNavbar()">
+                                <span class="glyphicon glyphicon-heart"></span>&nbsp;
+                                <span translate="global.menu.admin.health">Health</span>
                             </a>
                         </li>
                         <li ui-sref-active="active">
@@ -134,12 +133,13 @@
                                 <span translate="global.menu.admin.logs">Logs</span>
                             </a>
                         </li>
-                        <li  ui-sref-active="active">
+                        <li ng-show="vm.swaggerEnabled" ui-sref-active="active">
                             <a ui-sref="docs" ng-click="vm.collapseNavbar()">
                                 <span class="glyphicon glyphicon-book"></span>&nbsp;
                                 <span translate="global.menu.admin.apidocs">API</span>
                             </a>
                         </li>
+                        <!-- jhipster-needle-add-element-to-admin-menu - JHipster will add entities to the admin menu here -->
                     </ul>
                 </li>
                 <li ui-sref-active="active" uib-dropdown dropdown ng-controller="JhiLanguageController as languageVm">

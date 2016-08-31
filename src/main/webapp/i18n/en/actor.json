@@ -17,6 +17,7 @@
         "login": "Id",
         "firstName": "First name",
         "lastName": "Last name",
-        "bornDate": "Date of birth"
+        "bornDate": "Date of birth",
+        "created":"You have succesfully created the actor"
     }
 }

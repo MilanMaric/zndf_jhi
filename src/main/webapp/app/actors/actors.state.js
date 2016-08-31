@@ -14,7 +14,7 @@
                     url: '/actors?page&sort',
                     data: {
                         authorities: ['ROLE_USER'],
-                        pageTitle: 'userManagement.home.title'
+                        pageTitle: 'actors.home.title'
                     },
                     views: {
                         'content@': {
@@ -84,10 +84,7 @@
                                 resolve: {
                                     entity: function () {
                                         return {
-                                            id: null, login: null, firstName: null, lastName: null, email: null,
-                                            activated: true, langKey: null, createdBy: null, createdDate: null,
-                                            lastModifiedBy: null, lastModifiedDate: null, resetDate: null,
-                                            resetKey: null, authorities: null
+                                            id: null
                                         };
                                     }
                                 }
@@ -141,7 +138,7 @@
                                         }]
                                 }
                             }).result.then(function () {
-                                $state.go('user-management', null, {reload: true});
+                                $state.go('actors', null, {reload: true});
                             }, function () {
                                 $state.go('^');
                             });

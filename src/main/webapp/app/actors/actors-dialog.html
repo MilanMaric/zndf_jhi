@@ -7,7 +7,6 @@
             Create or edit a User</h4>
     </div>
     <div class="modal-body">
-        <jhi-alert-error></jhi-alert-error>
         <div class="form-group">
             <label translate="global.field.id">ID</label>
             <input type="text" class="form-control" name="id"
@@ -17,7 +16,7 @@
         <div class="form-group">
             <label class="control-label" translate="actor.firstName">FirstName</label>
             <input type="text" class="form-control" name="firstName"
-                   ng-model="vm.actor.firstName" ng-required="vm.actor.id == null" ng-minlength=1 ng-maxlength=50 ng-pattern="/^[_'.@A-Za-z0-9-]*$/">
+                   ng-model="vm.actor.firstName" ng-required="true" ng-minlength=1 ng-maxlength=255>
 
             <div ng-show="editForm.firstName.$invalid">
                 <p class="help-block"
@@ -27,16 +26,17 @@
 
                 <p class="help-block"
                    ng-show="editForm.firstName.$error.maxlength" translate="entity.validation.maxlength"
-                   translate-value-max="50">
-                    This field cannot be longer than 50 characters.
+                   translate-value-max="255">
+                    This field cannot be longer than 255 characters.
                 </p>
+                
             </div>
         </div>
 
         <div class="form-group">
             <label class="control-label" translate="actor.lastName">Last name</label>
             <input type="text" class="form-control" name="lastName"
-                   ng-model="vm.actor.lastName" ng-required="vm.actor.id == null" ng-minlength=1 ng-maxlength=50 ng-pattern="/^[_'.@A-Za-z0-9-]*$/">
+                   ng-model="vm.actor.lastName" ng-required="true" ng-minlength=1 ng-maxlength=255>
 
             <div ng-show="editForm.lastName.$invalid">
                 <p class="help-block"
@@ -46,8 +46,8 @@
 
                 <p class="help-block"
                    ng-show="editForm.lastName.$error.maxlength" translate="entity.validation.maxlength"
-                   translate-value-max="50">
-                    This field cannot be longer than 50 characters.
+                   translate-value-max="255">
+                    This field cannot be longer than 255 characters.
                 </p>
             </div>
         </div>
@@ -55,7 +55,7 @@
         <div class="form-group">
             <label class="control-label" translate="actor.bornDate">Born date</label>
             <uib-datepicker type="text"  name="bornDate"
-                            ng-model="vm.actor.bornDate" ></uib-datepicker>
+                            ng-model="vm.actor.bornDate" ng-required="true"></uib-datepicker>
         </div>
 
     </div>

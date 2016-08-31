@@ -150,7 +150,13 @@ public class FilmResource {
     @Secured(AuthoritiesConstants.ADMIN)
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         Film film = filmRepository.findOne(id);
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        if (film != null) {
+            film.setActive(false);
+            filmRepository.save(film);
+            return ResponseEntity.ok().build();
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, path = "/{id}")
@@ -225,11 +231,17 @@ public class FilmResource {
     @Timed
     public void downloadTrailer(@PathVariable Long id, @PathVariable Long trailerId, HttpServletResponse response) throws URISyntaxException, IOException {
         Film film = filmRepository.findOne(id);
+        log.debug("Trailer download film: {}", film);
         if (film != null) {
             Trailer trailer = trailerRepository.findOne(trailerId);
-            if (trailer.getInternal()) {
+            log.debug("Trailer download: {}", trailer);
+            if (trailer != null && trailer.getInternal()) {
                 fileService.downloadFile(response, "C://trailers", trailer.getUri());
+            } else {
+                response.setStatus(404);
             }
+        } else {
+            response.setStatus(404);
         }
     }
 

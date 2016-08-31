@@ -122,7 +122,7 @@
                     },
                     onEnter: ['$stateParams', '$state', '$uibModal', function ($stateParams, $state, $uibModal) {
                             $uibModal.open({
-                                templateUrl: 'app/films/films-delete-dialog-controller.js',
+                                templateUrl: 'app/films/films-delete-dialog.html',
                                 controller: 'FilmsDeleteController',
                                 controllerAs: 'vm',
                                 size: 'md',
@@ -132,7 +132,7 @@
                                         }]
                                 }
                             }).result.then(function () {
-                                $state.go('user-management', null, {reload: true});
+                                $state.go('films', null, {reload: true});
                             }, function () {
                                 $state.go('^');
                             });

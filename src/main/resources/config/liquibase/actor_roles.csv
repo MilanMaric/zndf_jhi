@@ -1,5 +1,5 @@
 id,created_by,created_date,last_modified_by,last_modified_date,active,role_name,actor_id,film_id
-1,system,"2016-08-30 23:28:26",system,"2016-08-30 23:28:26",1,"Andy Dufresne",1,1
-2,system,"2016-08-30 23:28:27",system,"2016-08-30 23:28:27",1,"Ellis Boyd 'Red' Redding",2,1
-3,system,"2016-08-31 00:20:05",system,"2016-08-31 00:20:05",1,"Don Vito Corleone",3,2
-4,system,"2016-08-31 00:20:05",system,"2016-08-31 00:20:05",1,"Michael Corleone",4,2
+1,system,"2016-08-30 23:28:26",system,"2016-08-30 23:28:26",true,"Andy Dufresne",1,1
+2,system,"2016-08-30 23:28:27",system,"2016-08-30 23:28:27",true,"Ellis Boyd 'Red' Redding",2,1
+3,system,"2016-08-31 00:20:05",system,"2016-08-31 00:20:05",true,"Don Vito Corleone",3,2
+4,system,"2016-08-31 00:20:05",system,"2016-08-31 00:20:05",true,"Michael Corleone",4,2

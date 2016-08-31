@@ -1,4 +1,4 @@
-<div>
+<div clas="well">
     <h2 translate="film.home.title">Users</h2>
     <jhi-alert></jhi-alert>
     <div class="row">
@@ -17,7 +17,6 @@
                     <th jh-sort-by="relaseDate"><span translate="film.relaseDate">Relase date</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th><span translate="film.duration">Duration</span> <span class="glyphicon glyphicon-sort"></span></th>
                     <th jh-sort-by="rate"><span translate="film.rating">Rating</span> <span class="glyphicon glyphicon-sort"></span></th>
-
                     <th></th>
                 </tr>
             </thead>
@@ -42,12 +41,12 @@
                                 <span class="glyphicon glyphicon-pencil"></span>
                                 <span class="hidden-xs hidden-sm" translate="entity.action.edit"></span>
                             </button>
-<!--                            <button type="submit"
+                            <button type="submit"
                                     ui-sref="films.delete({id:film.id})"
-                                    class="btn btn-danger btn-sm" ng-disabled="vm.currentAccount== film.login">
+                                    class="btn btn-danger btn-sm">
                                 <span class="glyphicon glyphicon-remove-circle"></span>
                                 <span class="hidden-xs hidden-sm" translate="entity.action.delete"></span>
-                            </button>-->
+                            </button>
                         </div>
                     </td>
                 </tr>

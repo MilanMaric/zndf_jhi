@@ -105,8 +105,8 @@
 <div class="well well-inverse" has-authority="ROLE_SUPERUSER">
     <form name="fileForm" novalidate ng-submit="vm.saveVideo()">
         <div class="form-group">
-            <input type="file" id="inputFile3" file-model="vm.newVideo" required accept="image/*">
-            <input type="text" readonly="" class="form-control" placeholder="Select file...">
+            <input type="file" id="inputFile3" file-model="vm.newVideo" required accept="video/*">
+            <input type="text" readonly="" ng-required="true" class="form-control" placeholder="Select file...">
         </div>
 
         <button type="submit"  ng-disabled="fileForm.$invalid" class="btn btn-primary">Save</button>
@@ -147,7 +147,7 @@
                 </p>
             </div>
         </div>
-        <button type="submit" ng-disabled="editForm.$invalid" class="btn btn-primary text-center">
+        <button type="submit" ng-disabled="commentForm.$invalid" class="btn btn-primary text-center">
             <span class="glyphicon glyphicon-save"></span>&nbsp;<span translate="film.saveComment">Save</span>
         </button>
     </form>

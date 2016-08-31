@@ -79,7 +79,7 @@
             <div class="row">
                 <div class="col-md-6 well well-info">
                     <h2>All actors</h2>
-                    <input type="text" class="form-control" ng-model="vm.filmSearch.$" placeholder="Search actors">
+                    <input type="text" class="form-control" ng-model="vm.actorSearch.$" placeholder="Search actors">
                     <div class="table-responsive">
                         <table class="table table-striped">
                             <thead>
@@ -92,7 +92,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr ng-repeat="actor in vm.actors | filter:vm.filmSearch:strict">
+                                <tr ng-repeat="actor in vm.actors | filter:vm.actorSearch:strict">
                                     <td><a ui-sref="actor-detail({id:actor.id})">{{actor.id}}</a></td>
                                     <td>{{actor.firstName}}</td>
                                     <td>{{actor.lastName}}</td>
@@ -109,6 +109,7 @@
                             </tbody>
                         </table>
                     </div>
+                    <button class="btn btn-material-brown" ng-click="vm.createActor()">Add new actor</button>
                 </div>
                 <div class="col-md-6 well well-success">
                     <h2>Actors on movie</h2>

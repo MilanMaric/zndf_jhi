@@ -43,6 +43,7 @@
             var dateTimeMilis=vm.event.time.date.getTime()+timeMillis;
             var dateTimeObject=new Date(dateTimeMilis);
             vm.event.eventDate=dateTimeObject.toISOString();
+            console.log("EVENT DATE: "+vm.event.eventDate);
             vm.event.time=undefined;
             if (vm.event.id !== null) {
                 Event.update(vm.event, onSaveSuccess, onSaveError);

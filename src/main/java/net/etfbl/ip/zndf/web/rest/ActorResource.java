@@ -54,7 +54,7 @@ public class ActorResource {
     public ResponseEntity<Actor> save(@RequestBody Actor actor) throws URISyntaxException {
         log.info("Saving actor: {}", actor);
         Actor newActor = actorRepository.save(actor);
-        return ResponseEntity.created(new URI("/api/actors/" + newActor.getId())).headers(HeaderUtil.createAlert("films.created", newActor.getId().toString())).body(newActor);
+        return ResponseEntity.created(new URI("/api/actors/" + newActor.getId())).headers(HeaderUtil.createAlert("actors.created", newActor.getId().toString())).body(newActor);
     }
 
     @RequestMapping(method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -62,7 +62,7 @@ public class ActorResource {
     public ResponseEntity<Actor> update(@RequestBody Actor actor) throws URISyntaxException {
         log.info("Update actor: {}", actor);
         Actor newActor = actorRepository.save(actor);
-        return ResponseEntity.created(new URI("/api/actors/" + newActor.getId())).headers(HeaderUtil.createAlert("films.updated", newActor.getId().toString())).body(newActor);
+        return ResponseEntity.created(new URI("/api/actors/" + newActor.getId())).headers(HeaderUtil.createAlert("actors.updated", newActor.getId().toString())).body(newActor);
     }
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE, path = "/{id}")
@@ -75,4 +75,18 @@ public class ActorResource {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
+    @RequestMapping(method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE, path = "/{id}")
+    @Timed
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        Actor actor = actorRepository.findOne(id);
+        if (actor != null) {
+            actor.setActive(false);
+            actorRepository.save(actor);
+            return ResponseEntity.ok().build();
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
 }
