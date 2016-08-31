@@ -41,9 +41,10 @@
                             </button>
                             <button type="submit"
                                     ui-sref="events.delete({id:event.id})"
-                                    class="btn btn-danger btn-sm" has-authority='ROLE_ADMIN'>
-                                <span class="glyphicon glyphicon-remove-circle"></span>
-                                <span class="hidden-xs hidden-sm" translate="entity.action.delete"></span>
+                                    class="btn btn-warning btn-sm" has-authority='ROLE_ADMIN'
+                                    ng-hide="event.sent">
+                                <span class="glyphicon glyphicon-send"></span>
+                                <span class="hidden-xs hidden-sm">Send</span>
                             </button>
                         </div>
                     </td>

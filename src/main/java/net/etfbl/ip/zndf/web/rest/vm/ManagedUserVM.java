@@ -1,20 +1,19 @@
 package net.etfbl.ip.zndf.web.rest.vm;
 
 import java.time.ZonedDateTime;
-
 import java.util.Set;
-
-import net.etfbl.ip.zndf.domain.User;
-import net.etfbl.ip.zndf.service.dto.UserDTO;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import net.etfbl.ip.zndf.domain.User;
+import net.etfbl.ip.zndf.service.dto.UserDTO;
 
 /**
- * View Model extending the UserDTO, which is meant to be used in the user management UI.
+ * View Model extending the UserDTO, which is meant to be used in the user
+ * management UI.
  */
 public class ManagedUserVM extends UserDTO {
 
-    public static final int PASSWORD_MIN_LENGTH = 4;
+    public static final int PASSWORD_MIN_LENGTH = 15;
     public static final int PASSWORD_MAX_LENGTH = 100;
 
     private Long id;
@@ -42,7 +41,7 @@ public class ManagedUserVM extends UserDTO {
     }
 
     public ManagedUserVM(Long id, String login, String password, String firstName, String lastName,
-                          String email, boolean activated, String langKey, Set<String> authorities , ZonedDateTime createdDate, String lastModifiedBy, ZonedDateTime lastModifiedDate ) {
+                         String email, boolean activated, String langKey, Set<String> authorities, ZonedDateTime createdDate, String lastModifiedBy, ZonedDateTime lastModifiedDate) {
         super(login, firstName, lastName, email, activated, langKey, authorities);
         this.id = id;
         this.createdDate = createdDate;
@@ -89,11 +88,11 @@ public class ManagedUserVM extends UserDTO {
 
     @Override
     public String toString() {
-        return "ManagedUserVM{" +
-            "id=" + id +
-            ", createdDate=" + createdDate +
-            ", lastModifiedBy='" + lastModifiedBy + '\'' +
-            ", lastModifiedDate=" + lastModifiedDate +
-            "} " + super.toString();
+        return "ManagedUserVM{"
+                + "id=" + id
+                + ", createdDate=" + createdDate
+                + ", lastModifiedBy='" + lastModifiedBy + '\''
+                + ", lastModifiedDate=" + lastModifiedDate
+                + "} " + super.toString();
     }
 }

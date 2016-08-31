@@ -72,7 +72,7 @@
                     parent: 'events',
                     url: '/new',
                     data: {
-                        authorities: ['ROLE_USER']
+                        authorities: ['ROLE_SUPERUSER']
                     },
                     onEnter: ['$stateParams', '$state', '$uibModal', function ($stateParams, $state, $uibModal) {
                             $uibModal.open({
@@ -99,7 +99,7 @@
                     parent: 'events',
                     url: '/{id}/edit',
                     data: {
-                        authorities: ['ROLE_USER']
+                        authorities: ['ROLE_SUPERUSER']
                     },
                     onEnter: ['$stateParams', '$state', '$uibModal', function ($stateParams, $state, $uibModal) {
                             $uibModal.open({
@@ -128,7 +128,7 @@
                     parent: 'events',
                     url: '/{id}/delete',
                     data: {
-                        authorities: ['ROLE_USER']
+                        authorities: ['ROLE_ADMIN']
                     },
                     onEnter: ['$stateParams', '$state', '$uibModal', function ($stateParams, $state, $uibModal) {
                             $uibModal.open({
